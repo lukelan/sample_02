@@ -9,6 +9,15 @@
 #import "SDWebImageCompat.h"
 #import "SDWebImageManager.h"
 
+#define enumWebImageScaleOption_ScaleToFill                 @"enumWebImageScaleOption_ScaleToFill"
+#define enumWebImageScaleOption_FullFill                    @"enumWebImageScaleOption_FullFill"
+#define enumWebImageScaleOption_Fill                        @"enumWebImageScaleOption_Fill"
+#define enumWebImageScaleOption_ScaleToWidth_Top            @"enumWebImageScaleOption_ScaleToWidth_Top"
+#define enumWebImageScaleOption_ScalePhotoToSize            @"enumWebImageScaleOption_ScalePhotoToSize"
+#define enumWebImageScaleOption_ScalePhotoToSizeLarger      @"enumWebImageScaleOption_ScalePhotoToSizeLarger"
+#define enumWebImageScaleOption_ScalePhotoFullSize          @"enumWebImageScaleOption_ScalePhotoFullSize"
+#define enumWebImageScaleOption_ScalePhotoCenterFullSize          @"enumWebImageScaleOption_ScalePhotoCenterFullSize"
+
 /**
  * Integrates SDWebImage async downloading and caching of remote images with UIImageView.
  *
@@ -138,5 +147,5 @@
  * Cancel the current download
  */
 - (void)cancelCurrentImageLoad;
-
+@property (atomic, retain) NSString                  *scaleOption;
 @end

@@ -8,10 +8,23 @@
 
 #import "UIImageView+WebCache.h"
 #import "objc/runtime.h"
+#import "SupportFunction.h"
 
 static char operationKey;
 
 @implementation UIImageView (WebCache)
+static char UIB_PROPERTY_KEY;
+@dynamic scaleOption;
+
+- (void)setScaleOption:(NSString *)option
+{
+    objc_setAssociatedObject(self, &UIB_PROPERTY_KEY, option, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSString *)scaleOption
+{
+    return (NSString *)objc_getAssociatedObject(self, &UIB_PROPERTY_KEY);
+}
 
 - (void)setImageWithURL:(NSURL *)url
 {
@@ -62,19 +75,50 @@ static char operationKey;
                 {
                     return;
                 }
-                UIImage *temp = image;
-                if ((image.size.width > image.size.height) && (sself.frame.size.width < sself.frame.size.height)){
-//                    temp = [self rotateImageAppropriately:image withDirection:UIImageOrientationLeft];
-                }
                 
-                if (temp)
+                if (image)
                 {
-                    sself.image = temp;
+                    // scale image
+                    if ([sself.scaleOption isEqual: enumWebImageScaleOption_FullFill]) {
+                        [sself setImage:image];
+                    }
+                    else if ([sself.scaleOption isEqual: enumWebImageScaleOption_ScaleToFill]) {
+                        
+                        [sself setImage:[image imageByScalingToSize:sself.frame.size withOption:enumImageScalingType_Center_ScaleSize]];
+                    }
+                    else if ([sself.scaleOption isEqual: enumWebImageScaleOption_ScaleToWidth_Top]) {
+                        [sself setImage:[image imageByScalingToSize:sself.frame.size withOption:enumImageScalingType_Top]];
+                    }
+                    else if ([sself.scaleOption isEqual: enumWebImageScaleOption_ScalePhotoToSize]) {
+                        
+                        UIImage *thumbnailPhoto = [sself cropCenterAndScaleImageToSize:CGSizeMake(85.0,85.0) selectedImage:image];
+                        
+                        [sself setImage:thumbnailPhoto];
+                    }
+                    else if ([sself.scaleOption isEqual: enumWebImageScaleOption_ScalePhotoToSizeLarger]) {
+                        //UIImage *thumbnailPhoto = [self cropCenterAndScaleImageToSize:CGSizeMake(240.0,195.0) selectedImage:image];
+                        UIImage *thumbnailPhoto = [sself cropCenterAndScaleImageToSize:CGSizeMake(240.0,220.0) selectedImage:image];
+                        [sself setImage:thumbnailPhoto];
+                    }
+                    
+                    else if ([sself.scaleOption isEqual: enumWebImageScaleOption_ScalePhotoFullSize]) {
+                        UIImage *thumbnailPhoto = [sself cropCenterAndScaleImageToSize:CGSizeMake(320.0,220.0) selectedImage:image];
+                        [sself setImage:thumbnailPhoto];
+                    } else if ([sself.scaleOption isEqual: enumWebImageScaleOption_ScalePhotoCenterFullSize]) {
+                        UIImage *thumbnailPhoto = [image imageByScalingToSize:CGSizeMake(sself.frame.size.width,sself.frame.size.height) withOption:enumImageScalingType_Center_FullSize];
+                        [sself setImage:thumbnailPhoto];
+                    }
+                    else {
+                        [sself setImage:image];
+                    }
+                    
+                    //                    sself.image = image;
                     [sself setNeedsLayout];
                 }
+                
                 if (completedBlock && finished)
                 {
-                    completedBlock(temp, error, cacheType);
+                    completedBlock(image, error, cacheType);
                 }
             };
             if ([NSThread isMainThread])
@@ -107,6 +151,64 @@ static char operationKey;
         [operation cancel];
         objc_setAssociatedObject(self, &operationKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
+}
+
+#pragma mark - Utilities methods
+- (UIImage *)cropCenterAndScaleImageToSize:(CGSize)cropSize selectedImage:(UIImage*) image {
+	UIImage *scaledImage = [self rescaleImageToSize:[self calculateNewSizeForCroppingBox:cropSize selectedImage:image] selectedImage:image];
+    
+    NSLog(@"width:%f height:%f",scaledImage.size.width,scaledImage.size.height);
+    
+    CGRect cropedImageRect = CGRectMake((scaledImage.size.width-cropSize.width)/2, (scaledImage.size.height-cropSize.height)/2, cropSize.width, cropSize.height);
+    
+    //CGRect cropedImageRect = CGRectMake((image.size.width-cropSize.width)/2, (image.size.height-cropSize.height)/2, cropSize.width, cropSize.height);
+    
+	return [self cropImageToRect:cropedImageRect selectedImage:scaledImage];
+}
+
+- (UIImage *)cropImageToRect:(CGRect)cropRect selectedImage:(UIImage*)image {
+	// Begin the drawing (again)
+	UIGraphicsBeginImageContext(cropRect.size);
+	CGContextRef ctx = UIGraphicsGetCurrentContext();
+	
+	// Tanslate and scale upside-down to compensate for Quartz's inverted coordinate system
+	CGContextTranslateCTM(ctx, 0.0, cropRect.size.height);
+	CGContextScaleCTM(ctx, 1.0, -1.0);
+	
+	// Draw view into context
+	CGRect drawRect = CGRectMake(-cropRect.origin.x, cropRect.origin.y - (image.size.height - cropRect.size.height) , image.size.width, image.size.height);
+	CGContextDrawImage(ctx, drawRect, image.CGImage);
+	
+	// Create the new UIImage from the context
+	UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+	
+	// End the drawing
+	UIGraphicsEndImageContext();
+	
+	return newImage;
+}
+
+- (CGSize)calculateNewSizeForCroppingBox:(CGSize)croppingBox selectedImage:(UIImage*)image {
+	// Make the shortest side be equivalent to the cropping box.
+	CGFloat newHeight, newWidth;
+	if (image.size.width < image.size.height) {
+		newWidth = croppingBox.width;
+		newHeight = (image.size.height / image.size.width) * croppingBox.width;
+	} else {
+		newHeight = croppingBox.height;
+		newWidth = (image.size.width / image.size.height) *croppingBox.height;
+	}
+	
+	return CGSizeMake(newWidth, newHeight);
+}
+
+- (UIImage *)rescaleImageToSize:(CGSize)size selectedImage:(UIImage*)image {
+	CGRect rect = CGRectMake(0.0, 0.0, size.width, size.height);
+	UIGraphicsBeginImageContext(rect.size);
+	[image drawInRect:rect];  // scales image to rect
+	UIImage *resImage = UIGraphicsGetImageFromCurrentImageContext();
+	UIGraphicsEndImageContext();
+	return resImage;
 }
 
 @end
