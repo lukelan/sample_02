@@ -16,10 +16,17 @@
 #import "PositionOffCell.h"
 #import "NSArray+Sort.h"
 #import "UIViewController+Utility.h"
+#import "CinemaTableViewCell.h"
+#import "CinemaTableViewLocationCell.h"
+#import "CinemaTableViewPlaceCell.h"
 
-@interface CinemaViewController ()<NSFetchedResultsControllerDelegate>
+#define STRING_KEY_ITEMS @"items"
+#define STRING_KEY_SECTION_TITLE @"sectionTitle"
+
+@interface CinemaViewController ()<NSFetchedResultsControllerDelegate, CinemaTableViewCellDelegate>
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property int numberCinemaFavorite;
+@property (nonatomic, retain) NSMutableArray *datasource;
 @end
 
 @implementation CinemaViewController
@@ -35,6 +42,14 @@
 
 static CinemaViewController* _sharedMyCinemaView = nil;
 static bool distanceGetFromCurrentPos = NO;
+
+-(NSMutableArray *)datasource
+{
+    if (!_datasource) {
+        _datasource = [NSMutableArray array];
+    }
+    return _datasource;
+}
 
 - (void)dealloc
 {
@@ -54,6 +69,7 @@ static bool distanceGetFromCurrentPos = NO;
     yourPosition = nil;
     _displayLocation = nil;
     _cinemaListWithDistance = nil;
+    _datasource = nil;
 }
 
 +(CinemaViewController*)sharedCinemaViewController
@@ -256,251 +272,93 @@ static bool distanceGetFromCurrentPos = NO;
 }
 
 #pragma mark - Table view data source
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+-(Class)cellClassForObject:(id)object
 {
-    if(numberCinemaFavorite > 0)
-    {
-        UIView* ret = [[UIView alloc] init];
-        UILabel *lblRatingPoint = [[UILabel alloc] init];
-        [lblRatingPoint setFont:[UIFont getFontBoldSize13]];
-        [lblRatingPoint setBackgroundColor:[UIColor clearColor]];
-        [lblRatingPoint setTextColor:[UIColor blackColor]];
-        if (section == 1) {
-            lblRatingPoint.text = TITLE_SUPPORT_BUY_TICKET_ONLINE_123PHIM;
-            CGSize sizeText = [lblRatingPoint.text sizeWithFont:[UIFont getFontBoldSize18]];
-            [lblRatingPoint setFrame:CGRectMake(MARGIN_EDGE_TABLE_GROUP + 5, MARGIN_EDGE_TABLE_GROUP/2, sizeText.width, sizeText.height)];
-            [ret addSubview:lblRatingPoint];
-            return ret;
-        }
-        if (section == (numberCinemaFavorite + 1)) {
-            lblRatingPoint.text = @"Rạp xung quanh";
-            CGSize sizeText = [lblRatingPoint.text sizeWithFont:[UIFont getFontBoldSize18]];
-            [lblRatingPoint setFrame:CGRectMake(MARGIN_EDGE_TABLE_GROUP + 5, MARGIN_EDGE_TABLE_GROUP/2, sizeText.width, sizeText.height)];
-            [ret addSubview:lblRatingPoint];
-            return ret;
-        }
+    if ([object isMemberOfClass:[CinemaTableViewLocationItem class]]) {
+        return [CinemaTableViewLocationCell class];
     }
-    return nil;
+    else if ([object isMemberOfClass:[CinemaTableViewPlaceItem class]])
+    {
+        return [CinemaTableViewPlaceCell class];
+        }
+    
+    return [CinemaTableViewPlaceCell class];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return (1 + self.cinemaListWithDistance.count);
+    return self.datasource.count;
 }
 
 // Customize the number of rows in the table view.
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0) {
-        return 1;
-    }
-    return 2;
-    //    return [cinemaListWithDistance count]+1;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    if(numberCinemaFavorite > 0)
-    {
-        CGSize sizeText = [@"ABC" sizeWithFont:[UIFont getFontNormalSize13]];
-        if (section == 1) {
-            return (sizeText.height + MARGIN_EDGE_TABLE_GROUP + 5);
-        }
-        if (section == (numberCinemaFavorite +1)) {
-            return (sizeText.height + MARGIN_EDGE_TABLE_GROUP + 5);
-        }
-    }
-    return MARGIN_EDGE_TABLE_GROUP;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return MARGIN_EDGE_TABLE_GROUP;
+    return [[[self.datasource objectAtIndex:section] objectForKey:STRING_KEY_ITEMS] count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {    
-    if ([indexPath section] == 0)
-    {
-        NSString *thePath = [[NSBundle mainBundle] pathForResource:@"location" ofType:@"png"];
-        UIImage *prodImg = [[UIImage alloc] initWithContentsOfFile:thePath];
-        float height = prodImg.size.height;
-        return height;
-    }
-    else
-    {
-        if (indexPath.row == 0)
-        {
-            NSString *thePath = [[NSBundle mainBundle] pathForResource:@"location" ofType:@"png"];
-            UIImage *prodImg = [[UIImage alloc] initWithContentsOfFile:thePath];
-            float height = prodImg.size.height;
-            return height;
-        }
-        else
-        {
-            NSString *thePath = [[NSBundle mainBundle] pathForResource:@"theater_distance_time" ofType:@"png"];
-            UIImage *prodImg = [[UIImage alloc] initWithContentsOfFile:thePath];
-            float height = prodImg.size.height;
-            return height + MARGIN_EDGE_TABLE_GROUP;
-        }
-    }
-    return 70;
+    id object = [[[self.datasource objectAtIndex:indexPath.section] objectForKey:STRING_KEY_ITEMS] objectAtIndex:indexPath.row];
+    Class cellClass = [self cellClassForObject:object];
+    return [cellClass tableView:self.tableView rowHeightForObject:object];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (0 == [indexPath section])
-    {
+    id object = [[[self.datasource objectAtIndex:indexPath.section] objectForKey:STRING_KEY_ITEMS] objectAtIndex:indexPath.row];
+    Class cellClass = [self cellClassForObject:object];
+    NSString *indentifier = [cellClass description];
         
-        if ([APIManager getBooleanInAppForKey:KEY_STORE_IS_SHOW_MY_LOCATION] == YES && !isNeedReloadCell)
-        {
-            CinemaHeaderCell* retCell = [tableView dequeueReusableCellWithIdentifier:@"cinema_header_cell_id"];
-            if (retCell == nil) {
-                NSArray* arr = [[NSBundle mainBundle] loadNibNamed:@"CinemeHeaderCell" owner:self options:nil];
-                retCell = [arr objectAtIndex:0];
-                retCell.selectionStyle = UITableViewCellSelectionStyleGray;
-                retCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-                retCell.backgroundColor = [UIColor whiteColor];
-                 [retCell configLayout];
+    CinemaTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:indentifier];
+    if (!cell) {
+        cell = [[cellClass alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
+        cell.delegate = self;
             }
            
-            [retCell loadDataWithImage:@"location_active" cinemaName:@"Vị trí hiện tại" cinemaAddress:self.yourPosition.address withMargin:MARGIN_EDGE_TABLE_GROUP/2];
-            retCell.viewDiscount.hidden = YES;
-            return retCell;
-            
-        } else {
-            PositionOffCell* retCell = [tableView dequeueReusableCellWithIdentifier:@"position_off_cell_id"];
-            if (retCell == nil) {
-
-                NSArray* arr = [[NSBundle mainBundle] loadNibNamed:@"PostionOffCell" owner:self options:nil];
-                retCell = [arr objectAtIndex:0];
-                [retCell configLayout];
-                retCell.selectionStyle = UITableViewCellSelectionStyleGray;
-                retCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-                
-            }
-            [retCell setData:[NSString stringWithFormat:strDes, self.yourCity.center_name]];
-            [retCell setSelected:NO];
-            return retCell;
-        }
-    }
-    else
-    {
-        if (indexPath.section - 1 >= self.cinemaListWithDistance.count) {
-            UITableViewCell *retCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"temp_Cell"];
-            retCell.selectionStyle = UITableViewCellSelectionStyleNone;
-            retCell.accessoryType = UITableViewCellAccessoryNone;
-            [retCell setBackgroundColor:[UIColor clearColor]];
-            return retCell;
-        }
-        CinemaWithDistance* cinema_distance = [self.cinemaListWithDistance objectAtIndex:([indexPath section] - 1)];        
-        NSString* cinemaName = cinema_distance.cinema.cinema_name;
-        NSString* cinemaAddress = cinema_distance.cinema.cinema_address;
-        BOOL isLike = [cinema_distance.cinema.is_cinema_favourite boolValue];
-        BOOL isOnline = [cinema_distance.cinema.is_booking integerValue] == 1;
-        BOOL you_are_here = NO;
-        CGFloat distance = cinema_distance.distance/1000;
-        if( [self isDistanceFromYourPos] && distance < MIN_DISTANCE_TO_CINEMA )
-        {
-            you_are_here = YES;
+    if ([cell isKindOfClass:[CinemaTableViewCell class]]) {
+        [cell setObject:object];
         }
         
-        if (indexPath.row == 0)
-        {
-            CinemaHeaderCell* retCell = [tableView dequeueReusableCellWithIdentifier:@"cinema_header_cell_id"];
-            if (retCell == nil)
-            {
-                NSArray* arr = [[NSBundle mainBundle] loadNibNamed:@"CinemeHeaderCell" owner:self options:nil];
-                retCell = [arr objectAtIndex:0];
-                retCell.like = isLike;
-                [retCell configLayout];
-                retCell.selectionStyle = UITableViewCellSelectionStyleGray;
-                retCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    return cell;
             }
 
-            retCell.viewDiscount.hidden = NO;
-            if (cinema_distance.cinema.discount_type.intValue == ENUM_DISCOUNT_PERCENT)
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
             {
-                [[retCell lbDiscount] setText:[NSString stringWithFormat:@"-%d%@", cinema_distance.cinema.discount_value.intValue,@"%"]];
-            }
-            else if (cinema_distance.cinema.discount_type.intValue == ENUM_DISCOUNT_MONEY)
-            {
-                [[retCell lbDiscount] setText:[NSString stringWithFormat:@"-%dK", cinema_distance.cinema.discount_value.intValue/1000]];
-            }
-            else
-            {
-                [retCell.viewDiscount setHidden:YES];
-            }
-            [retCell loadDataWithImage:(isOnline?@"online": @"online_disable") cinemaName:cinemaName cinemaAddress:cinemaAddress withMargin:MARGIN_EDGE_TABLE_GROUP/2];
-            [retCell setSelected:NO];
-            return retCell;
+    NSString *title = [[self.datasource objectAtIndex:section] valueForKey:STRING_KEY_SECTION_TITLE];
+    if (title) {
+        UIView* ret = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320.0f, 21)];
+        UILabel *lblRatingPoint = [[UILabel alloc] initWithFrame:CGRectMake(MARGIN_EDGE_TABLE_GROUP + 5, 0, 280, 21)];
+        [lblRatingPoint setFont:[UIFont getFontBoldSize13]];
+        [lblRatingPoint setBackgroundColor:[UIColor clearColor]];
+        [lblRatingPoint setTextColor:[UIColor blackColor]];
+        [ret addSubview:lblRatingPoint];
             
-        }else if (indexPath.row == 1){
-            if (you_are_here) {
-                NSString* beAtCinemaCellId = @"beAtCinema";
-
-                UITableViewCell* retCell = [tableView dequeueReusableCellWithIdentifier:beAtCinemaCellId];
-                if (retCell == nil) {
-                    retCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:beAtCinemaCellId];
-                    retCell.accessoryType = UITableViewCellAccessoryNone;
-                    retCell.selectionStyle = UITableViewCellSelectionStyleNone;
-                    retCell.imageView.image = [UIImage imageNamed:@"cinema_person.png"];
-                    retCell.textLabel.font = [UIFont getFontBoldSize10];
-                    retCell.textLabel.textColor = [self color];
-                    retCell.textLabel.text = @"Bạn đang ở tại rạp này";
+        lblRatingPoint.text = title;
+//        ret.backgroundColor = [UIColor greenColor];
+        return ret;
                 }
-                [retCell setSelected:NO];
-                return retCell;
-                
-            }else{
-                NSString* cinemaContentId = @"cinemaContentId";
-                CinemaContentCell* retCell = [tableView dequeueReusableCellWithIdentifier:cinemaContentId];
-                if (retCell == nil) {
-                    retCell = [[CinemaContentCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cinemaContentId];
-                    retCell.accessoryType = UITableViewCellAccessoryNone;
-                    retCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    return nil;
                 }
                 
-                NSInteger timeCarMinutes = cinema_distance.driving_time/60;
-                NSInteger timeCarHourPart = timeCarMinutes / 60;
-                NSInteger timeCarMiniPart = timeCarMinutes % 60;
-                
-                NSInteger timeMotoMinutes = timeCarMinutes * 1.2;
-                NSInteger timeMotoHourPart = timeMotoMinutes / 60;
-                NSInteger timeMotoMiniPart = timeMotoMinutes % 60;
-                
-                NSString* distanceString = [NSString stringWithFormat:@"%.01f Km",distance];
-//                LOG_123PHIM(@"-----distance = %@", distanceString);
-                if (distance > 20.0)
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
                 {
-                    [retCell loadDataWithDistance:@"20+" timeOnFoot:@"..." timeByCar:@"..."];
-                    
-                }else{
-                    [retCell loadDataWithDistance:distanceString timeOnFoot:[NSString stringWithFormat:@"%@ %@", (timeMotoHourPart > 0?([NSString stringWithFormat:@"%d giờ", timeMotoHourPart]):(@"")), (timeMotoMiniPart > 0?([NSString stringWithFormat:@"%d phút", timeMotoMiniPart]):(@"1 phút"))] timeByCar:[NSString stringWithFormat:@"%@ %@", (timeCarHourPart > 0?([NSString stringWithFormat:@"%d giờ", timeCarHourPart]):(@"")), (timeCarMiniPart > 0?([NSString stringWithFormat:@"%d phút", timeCarMiniPart]):(@"1 phút"))]];
-                }
-                [retCell setSelected:NO];
-                return retCell;
-            }
-        }else{}
-        
+    NSString *title = [[self.datasource objectAtIndex:section] valueForKey:STRING_KEY_SECTION_TITLE];
+    if (title) {
+        return 22;
     }
-    return [[UITableViewCell alloc] init];
+    return title ? 22 : 0;
 }
 
-#pragma mark - Table view delegate
-- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+#pragma mark - CinemaTableViewCellDelegate
+-(void)cinemaTableViewCell:(CinemaTableViewCell *)cell didSelect:(id)object atIndex:(NSInteger)index
 {
     if (!self.isLoadedCinemaComplete) {
-        return nil;
-    }
-    return indexPath;
+        return;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
     AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
-    if (indexPath.section == 0)
+    if ([object isMemberOfClass:[CinemaTableViewLocationItem class]])
     {
         if ([APIManager getBooleanInAppForKey:KEY_STORE_IS_SHOW_MY_LOCATION] == YES)
         {
@@ -513,9 +371,8 @@ static bool distanceGetFromCurrentPos = NO;
     }
     else
     {
-        if (indexPath.row == 0)
-        {
-            CinemaWithDistance *cinemaWithDistance = [self.cinemaListWithDistance objectAtIndex:(indexPath.section - 1)];
+        for (CinemaWithDistance *cinemaWithDistance in self.cinemaListWithDistance) {
+            if ([cinemaWithDistance.cinema.cinema_id integerValue] == [[object cinema_id] integerValue]) {
             [self pushFilmListCinemaView: cinemaWithDistance];
             
             // send log to 123phim server
@@ -523,11 +380,13 @@ static bool distanceGetFromCurrentPos = NO;
                                                                   comeFrom:delegate.currentView
                                                               withActionID:ACTION_CINEMA_VIEW
                                                              currentFilmID:[NSNumber numberWithInt:NO_FILM_ID]
-                                                           currentCinemaID: ((CinemaWithDistance*)[self.cinemaListWithDistance objectAtIndex:indexPath.section-1]).cinema.cinema_id
+                                                               currentCinemaID: cinemaWithDistance.cinema.cinema_id
                                                            returnCodeValue:0 context:nil];
+                break;
         }
     }
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        
+    }
 }
 
 
@@ -761,6 +620,90 @@ static bool distanceGetFromCurrentPos = NO;
 {   
     //order
     self.cinemaListWithDistance = [self orderCinemaListWithDistance:self.cinemaListWithDistance];
+    
+    // building datasource (should release cinemaListWithDistance later; For now, keep it for another screen)
+    // clean datasource
+    [self.datasource removeAllObjects];
+    // location cell
+    NSString *currentLocation = @"";
+    NSString *address = @"";
+    BOOL isLocationActive = NO;
+    if ([APIManager getBooleanInAppForKey:KEY_STORE_IS_SHOW_MY_LOCATION] == YES && !isNeedReloadCell)
+    {
+        currentLocation = @"Vị trí hiện tại";
+        address = self.yourPosition.address;
+        isLocationActive = YES;
+    }
+    else {
+        address = [NSString stringWithFormat:strDes, self.yourCity.center_name];
+    }
+    CinemaTableViewLocationItem *locationItem = [[CinemaTableViewLocationItem alloc] initWithTitle:currentLocation andAddress:address isActive:isLocationActive];
+    [self.datasource addObject:[NSDictionary dictionaryWithObjectsAndKeys:@[locationItem], STRING_KEY_ITEMS, nil]];
+    
+    // favorite places
+    NSInteger i = 0;
+    NSMutableArray *favoritePlaces = [NSMutableArray array];
+    NSMutableArray *places = [NSMutableArray array];
+    for (; i < self.cinemaListWithDistance.count ; i++) {
+        CinemaWithDistance* cinema_distance = [self.cinemaListWithDistance objectAtIndex:i];
+        CinemaTableViewPlaceItem *item = [[CinemaTableViewPlaceItem alloc] initWithTitle:cinema_distance.cinema.cinema_name andAddress:cinema_distance.cinema.cinema_address];
+        item.cinema_id = cinema_distance.cinema.cinema_id;
+        item.isOnline = [cinema_distance.cinema.is_booking integerValue] == 1;
+        item.isLike = [cinema_distance.cinema.is_cinema_favourite boolValue];
+        CGFloat distance = cinema_distance.distance/1000;
+        if( [self isDistanceFromYourPos] && distance < MIN_DISTANCE_TO_CINEMA )
+        {
+            item.youAreHere = YES;
+        }
+        if (cinema_distance.cinema.discount_type.intValue == ENUM_DISCOUNT_PERCENT)
+        {
+            item.discount = [NSString stringWithFormat:@"-%d%@", cinema_distance.cinema.discount_value.intValue,@"%"];
+        }
+        else if (cinema_distance.cinema.discount_type.intValue == ENUM_DISCOUNT_MONEY)
+        {
+            item.discount = [NSString stringWithFormat:@"-%dK", cinema_distance.cinema.discount_value.intValue/1000];
+        }
+        // distance
+        
+        NSString* distanceString = [NSString stringWithFormat:@"%.01f Km",distance];
+        if (distance > 20.0)
+        {
+            item.distance = @"20+";
+            item.estimateTimeBike = @"...";
+            item.estimateTimeCar = @"...";
+            
+        }else{
+            NSInteger timeCarMinutes = cinema_distance.driving_time/60;
+            NSInteger timeCarHourPart = timeCarMinutes / 60;
+            NSInteger timeCarMiniPart = timeCarMinutes % 60;
+            
+            NSInteger timeMotoMinutes = timeCarMinutes * 1.2;
+            NSInteger timeMotoHourPart = timeMotoMinutes / 60;
+            NSInteger timeMotoMiniPart = timeMotoMinutes % 60;
+            
+            item.distance = distanceString;
+            item.estimateTimeBike = [NSString stringWithFormat:@"%@ %@", (timeMotoHourPart > 0?([NSString stringWithFormat:@"%d giờ", timeMotoHourPart]):(@"")), (timeMotoMiniPart > 0?([NSString stringWithFormat:@"%d phút", timeMotoMiniPart]):(@"1 phút"))];
+            item.estimateTimeCar = [NSString stringWithFormat:@"%@ %@", (timeCarHourPart > 0?([NSString stringWithFormat:@"%d giờ", timeCarHourPart]):(@"")), (timeCarMiniPart > 0?([NSString stringWithFormat:@"%d phút", timeCarMiniPart]):(@"1 phút"))];
+        }
+        
+        // add to array
+        if (i < numberCinemaFavorite) {
+            [favoritePlaces addObject:item];
+        }
+        else {
+            [places addObject:item];
+        }
+        
+    }
+    
+    // add to datasource
+    if (favoritePlaces.count > 0) {
+        [self.datasource addObject:[NSDictionary dictionaryWithObjectsAndKeys:TITLE_SUPPORT_BUY_TICKET_ONLINE_123PHIM, STRING_KEY_SECTION_TITLE, favoritePlaces, STRING_KEY_ITEMS, nil]];
+    }
+    if (places.count > 0) {
+        [self.datasource addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"Rạp xung quanh", STRING_KEY_SECTION_TITLE, places, STRING_KEY_ITEMS, nil]];
+    }
+
     [self.tableView reloadData];
 }
 

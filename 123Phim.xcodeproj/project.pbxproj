@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1811A3C4185C32F40042E4BA /* CinemaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1811A3B8185C32F40042E4BA /* CinemaTableViewCell.m */; };
+		1811A3C5185C32F40042E4BA /* CinemaTableViewLocationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1811A3BA185C32F40042E4BA /* CinemaTableViewLocationCell.m */; };
+		1811A3C6185C32F40042E4BA /* CinemaTableViewPlaceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1811A3BC185C32F40042E4BA /* CinemaTableViewPlaceCell.m */; };
+		1811A3C7185C32F40042E4BA /* CinemaTableViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1811A3BF185C32F40042E4BA /* CinemaTableViewItem.m */; };
+		1811A3C8185C32F40042E4BA /* CinemaTableViewLocationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1811A3C1185C32F40042E4BA /* CinemaTableViewLocationItem.m */; };
+		1811A3C9185C32F40042E4BA /* CinemaTableViewPlaceItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1811A3C3185C32F40042E4BA /* CinemaTableViewPlaceItem.m */; };
 		2810C6BE1713BFD5007F4D9F /* ShareTemplateViewDescription.html in Resources */ = {isa = PBXBuildFile; fileRef = 2810C6BD1713BFD5007F4D9F /* ShareTemplateViewDescription.html */; };
 		2810C6C21713C929007F4D9F /* comment_box_full.png in Resources */ = {isa = PBXBuildFile; fileRef = 2810C6C01713C929007F4D9F /* comment_box_full.png */; };
 		2810C6C31713C929007F4D9F /* comment_box_full@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2810C6C11713C929007F4D9F /* comment_box_full@2x.png */; };
@@ -536,6 +542,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1811A3B7185C32F40042E4BA /* CinemaTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinemaTableViewCell.h; sourceTree = "<group>"; };
+		1811A3B8185C32F40042E4BA /* CinemaTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CinemaTableViewCell.m; sourceTree = "<group>"; };
+		1811A3B9185C32F40042E4BA /* CinemaTableViewLocationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinemaTableViewLocationCell.h; sourceTree = "<group>"; };
+		1811A3BA185C32F40042E4BA /* CinemaTableViewLocationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CinemaTableViewLocationCell.m; sourceTree = "<group>"; };
+		1811A3BB185C32F40042E4BA /* CinemaTableViewPlaceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinemaTableViewPlaceCell.h; sourceTree = "<group>"; };
+		1811A3BC185C32F40042E4BA /* CinemaTableViewPlaceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CinemaTableViewPlaceCell.m; sourceTree = "<group>"; };
+		1811A3BE185C32F40042E4BA /* CinemaTableViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinemaTableViewItem.h; sourceTree = "<group>"; };
+		1811A3BF185C32F40042E4BA /* CinemaTableViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CinemaTableViewItem.m; sourceTree = "<group>"; };
+		1811A3C0185C32F40042E4BA /* CinemaTableViewLocationItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinemaTableViewLocationItem.h; sourceTree = "<group>"; };
+		1811A3C1185C32F40042E4BA /* CinemaTableViewLocationItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CinemaTableViewLocationItem.m; sourceTree = "<group>"; };
+		1811A3C2185C32F40042E4BA /* CinemaTableViewPlaceItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinemaTableViewPlaceItem.h; sourceTree = "<group>"; };
+		1811A3C3185C32F40042E4BA /* CinemaTableViewPlaceItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CinemaTableViewPlaceItem.m; sourceTree = "<group>"; };
 		1CA13FBF8D244CACA38AFD54 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2810C6BD1713BFD5007F4D9F /* ShareTemplateViewDescription.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ShareTemplateViewDescription.html; sourceTree = "<group>"; };
 		2810C6C01713C929007F4D9F /* comment_box_full.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = comment_box_full.png; sourceTree = "<group>"; };
@@ -1320,6 +1338,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1811A3B5185C32F40042E4BA /* CustomTable */ = {
+			isa = PBXGroup;
+			children = (
+				1811A3B6185C32F40042E4BA /* TableCells */,
+				1811A3BD185C32F40042E4BA /* TableItems */,
+			);
+			path = CustomTable;
+			sourceTree = "<group>";
+		};
+		1811A3B6185C32F40042E4BA /* TableCells */ = {
+			isa = PBXGroup;
+			children = (
+				1811A3B7185C32F40042E4BA /* CinemaTableViewCell.h */,
+				1811A3B8185C32F40042E4BA /* CinemaTableViewCell.m */,
+				1811A3B9185C32F40042E4BA /* CinemaTableViewLocationCell.h */,
+				1811A3BA185C32F40042E4BA /* CinemaTableViewLocationCell.m */,
+				1811A3BB185C32F40042E4BA /* CinemaTableViewPlaceCell.h */,
+				1811A3BC185C32F40042E4BA /* CinemaTableViewPlaceCell.m */,
+			);
+			path = TableCells;
+			sourceTree = "<group>";
+		};
+		1811A3BD185C32F40042E4BA /* TableItems */ = {
+			isa = PBXGroup;
+			children = (
+				1811A3BE185C32F40042E4BA /* CinemaTableViewItem.h */,
+				1811A3BF185C32F40042E4BA /* CinemaTableViewItem.m */,
+				1811A3C0185C32F40042E4BA /* CinemaTableViewLocationItem.h */,
+				1811A3C1185C32F40042E4BA /* CinemaTableViewLocationItem.m */,
+				1811A3C2185C32F40042E4BA /* CinemaTableViewPlaceItem.h */,
+				1811A3C3185C32F40042E4BA /* CinemaTableViewPlaceItem.m */,
+			);
+			path = TableItems;
+			sourceTree = "<group>";
+		};
 		289BBDB0170047CC00B69B31 /* css */ = {
 			isa = PBXGroup;
 			children = (
@@ -2059,6 +2112,7 @@
 		4F2B3417172A40E5009D6559 /* Cinema */ = {
 			isa = PBXGroup;
 			children = (
+				1811A3B5185C32F40042E4BA /* CustomTable */,
 				4F2B3418172A40E5009D6559 /* CellFilm.h */,
 				4F2B3419172A40E5009D6559 /* CellFilm.m */,
 				A9969F3217530D47004A122A /* CinemaInfoCell.h */,
@@ -3270,6 +3324,7 @@
 				2E889B431675D334003E074A /* ASINetworkQueue.m in Sources */,
 				2E889B441675D334003E074A /* Reachability.m in Sources */,
 				2E889B471675D334003E074A /* NSObject+SBJSON.m in Sources */,
+				1811A3C7185C32F40042E4BA /* CinemaTableViewItem.m in Sources */,
 				2E889B481675D334003E074A /* NSString+SBJSON.m in Sources */,
 				2E889B491675D334003E074A /* SBJsonBase.m in Sources */,
 				2E889B4A1675D334003E074A /* SBJsonParser.m in Sources */,
@@ -3355,6 +3410,7 @@
 				4F2B3451172A40E5009D6559 /* GalleryCell.m in Sources */,
 				4F2B3453172A40E5009D6559 /* CinemaRatingCell.m in Sources */,
 				4F2B3454172A40E5009D6559 /* SelectCityCell.m in Sources */,
+				1811A3C4185C32F40042E4BA /* CinemaTableViewCell.m in Sources */,
 				4F2B3455172A40E5009D6559 /* SelectDateCell.m in Sources */,
 				4F2B3456172A40E5009D6559 /* PromotionInfoCell.m in Sources */,
 				4F2B3457172A40E5009D6559 /* SeatView.m in Sources */,
@@ -3367,6 +3423,7 @@
 				A998633D173BAC3100590204 /* CheckoutResultViewController.m in Sources */,
 				4FA89604173B880E0062D8F0 /* SeatInfo.m in Sources */,
 				4F1CAB67173CE8BE000E97FE /* SelectBankViewController.m in Sources */,
+				1811A3C6185C32F40042E4BA /* CinemaTableViewPlaceCell.m in Sources */,
 				4F90076D1741E919002A20EB /* InputValidation.m in Sources */,
 				A91C143E1744890400423D05 /* TicketCell.m in Sources */,
 				A91C144117448F9600423D05 /* TicketListViewController.m in Sources */,
@@ -3379,6 +3436,7 @@
 				A9969F3417530D47004A122A /* CinemaInfoCell.m in Sources */,
 				4F8A688C17530D6700671074 /* UIImage+Ultility.m in Sources */,
 				4F12073917536360000ACC31 /* UIViewController+showhideTabbar.m in Sources */,
+				1811A3C8185C32F40042E4BA /* CinemaTableViewLocationItem.m in Sources */,
 				A9939BF1175374AF00FBFA9C /* CheckInViewController.m in Sources */,
 				4FFBABEA17549D280055E329 /* CustomGAITrackedViewController.m in Sources */,
 				4FFBABEB17549D280055E329 /* CustomViewController.m in Sources */,
@@ -3431,10 +3489,12 @@
 				A98395A0179E386D00617140 /* FavoriteButton.m in Sources */,
 				4F7650A817A21AD400BC60FB /* PullRefreshTableViewController.m in Sources */,
 				A912023617A8FDB700685DE4 /* PositionOffCell.m in Sources */,
+				1811A3C5185C32F40042E4BA /* CinemaTableViewLocationCell.m in Sources */,
 				4FC14A5E17AA52C400DBBD6C /* UIWebView+Clean.m in Sources */,
 				4FC14A7A17AB50B800DBBD6C /* LocationUtils.cpp in Sources */,
 				4F80E00E17ABB2EC0031B8D0 /* UIViewController+TabBarAnimation.m in Sources */,
 				4FFCCE3917AF634E00C7EFF9 /* LayoutUtil.m in Sources */,
+				1811A3C9185C32F40042E4BA /* CinemaTableViewPlaceItem.m in Sources */,
 				A967B6BE17B889C600E174DE /* HMSegmentedControl.m in Sources */,
 				A967B70117B889FF00E174DE /* HMSegmentedControlContainerView.m in Sources */,
 				4FAF45E117C32C4A0009CFE8 /* FilmCinemaPageView.m in Sources */,
