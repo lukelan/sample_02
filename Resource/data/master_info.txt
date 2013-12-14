@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bank_code</key>
+	<string>MASTER</string>
+	<key>bank_code_mobile</key>
+	<string>MASTER_M</string>
+	<key>bank_name</key>
+	<string>MASTER</string>
+	<key>confirm_param_limits</key>
+	<array>
+		<integer>1</integer>
+		<integer>1</integer>
+		<array>
+            <integer>1</integer>
+            <integer>-1</integer>
+        </array>
+	</array>
+	<key>confirm_param_names</key>
+	<array>
+		<string>cardHolderName</string>
+		<string>cardNumber</string>
+        <string>otpCode</string>
+	</array>
+	<key>confirm_param_titles</key>
+	<array>
+		<integer>1</integer>
+		<integer>1</integer>
+        <string>Mã OTP</string>
+	</array>
+	<key>confirm_param_types</key>
+	<array>
+		<string>DISABLE</string>
+		<string>SEPERATION|SET_MASK~[0,12]|DISABLE</string>
+        <string>NUMBER</string>
+	</array>
+	<key>param_limits</key>
+	<array>
+		<array>
+			<integer>1</integer>
+			<integer>-1</integer>
+		</array>
+		<array>
+            <integer>16</integer>
+            <integer>16</integer>
+		</array>
+        <array>
+			<integer>1</integer>
+			<integer>-1</integer>
+		</array>
+        <array>
+			<integer>1</integer>
+			<integer>-1</integer>
+		</array>
+	</array>
+	<key>param_names</key>
+	<array>
+		<string>cardHolderName</string>
+        <string>cardNumber</string>
+		<string>cardDate</string>
+        <string>cardCVV</string>
+	</array>
+	<key>param_titles</key>
+	<array>
+		<string>Tên chủ tài khoản (in hoa không dấu)</string>
+        <string>Số thẻ</string>
+        <string>Ngày hết hạn</string>
+        <string>CCV</string>
+	</array>
+	<key>param_types</key>
+	<array>
+		<string>ASCII|UPPERCASE</string>
+        <string>NUMBER|SEPERATION|SET_MASK~[0,12]</string>
+        <string>EXPIRED_DATE</string>
+		<string>ASCII|PASSWORD|NOT_SAVED</string>
+	</array>
+    
+    <key>pattern_123pay</key>
+    <string>https://123pay.vn/</string>
+    <key>pattern_123pay_sucess</key>
+    <string>https://123pay.vn/ccstep2/resultmobile.php</string>
+    <key>pattern_migs</key>
+    <string>https://migs.mastercard.com.au/</string>
+</dict>
+</plist>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="12B2080" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Artists" representedClassName="Actor" syncable="YES">
+        <attribute name="artist_id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="born" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="date_create" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="date_modify" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="is_active" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Cinema" representedClassName="Cinema" syncable="YES">
+        <attribute name="cinema_address" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="cinema_description" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="cinema_group_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="cinema_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="cinema_latitude" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="cinema_list_film" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="cinema_logo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="cinema_longtitude" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="cinema_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="cinema_phone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="cinema_url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date_add" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="date_update" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="is_active" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="location_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="Cinema_group" representedClassName="Cinema_group" syncable="YES">
+        <attribute name="cinema_group_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="cinema_group_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date_add" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="date_update" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="is_active" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="url_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="Comment" representedClassName="Comment" syncable="YES">
+        <attribute name="comment_id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date_add" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="date_update" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="film_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="user_name" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Film" representedClassName="Film" syncable="YES">
+        <attribute name="classify_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date_add" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="date_update" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="film_actors" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="film_category" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="film_description" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="film_director" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="film_duration" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="film_id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="film_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="film_publisher" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="film_total_buy" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="film_total_comment" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="film_total_like" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="is_active" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="list_image_review" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="list_image_thumbnail_review" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="poster_url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="publish_date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="status_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="trailer_url" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Film_cinema" representedClassName="Film_cinema" syncable="YES">
+        <attribute name="cinema_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="date_add" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="film_id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="is_active" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="Location" representedClassName="Location" syncable="YES">
+        <attribute name="location_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="location_name" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Room" representedClassName="Room" syncable="YES">
+        <attribute name="cinema_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="date_add" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="date_update" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="room_code" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="room_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="room_name" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Session" representedClassName="Session" syncable="YES">
+        <attribute name="date_add" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="date_update" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="film_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="is_active" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="room_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="session_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="session_time" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="version_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="Slot" representedClassName="Slot" syncable="YES">
+        <attribute name="date_add" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="date_update" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="room_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="slot_colum" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="slot_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="slot_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="slot_row" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="slot_type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="status_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="Ticket" representedClassName="Ticket" syncable="YES">
+        <attribute name="date_add" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="date_update" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="session_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="ticket_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="ticket_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ticket_price" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="ticket_status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="Ticket_transaction" representedClassName="Ticket_transaction" syncable="YES">
+        <attribute name="date_add" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="date_update" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="ticket_code" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ticket_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="transaction_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="Transaction" representedClassName="Transaction" syncable="YES">
+        <attribute name="date_add" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="date_update" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="status_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="thanhToan_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="ticket_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="total_sales" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="transaction_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="user_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="Transaction_detail" representedClassName="Transaction_detail" syncable="YES">
+        <attribute name="date_add" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="date_update" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="price" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="quantity" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="ticket_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="transaction_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Artists" positionX="0" positionY="0" width="128" height="150"/>
+        <element name="Cinema" positionX="0" positionY="0" width="128" height="270"/>
+        <element name="Cinema_group" positionX="0" positionY="0" width="128" height="135"/>
+        <element name="Comment" positionX="0" positionY="0" width="128" height="135"/>
+        <element name="Film" positionX="0" positionY="0" width="128" height="375"/>
+        <element name="Film_cinema" positionX="0" positionY="0" width="128" height="105"/>
+        <element name="Location" positionX="0" positionY="0" width="128" height="75"/>
+        <element name="Room" positionX="0" positionY="0" width="128" height="135"/>
+        <element name="Session" positionX="0" positionY="0" width="128" height="180"/>
+        <element name="Slot" positionX="0" positionY="0" width="128" height="180"/>
+        <element name="Ticket" positionX="0" positionY="0" width="128" height="150"/>
+        <element name="Ticket_transaction" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="Transaction" positionX="0" positionY="0" width="128" height="165"/>
+        <element name="Transaction_detail" positionX="0" positionY="0" width="128" height="135"/>
+    </elements>
+</model>

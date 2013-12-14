@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>453365F4-2E3B-4CDD-B400-0FDD2FEFC3CC</string>
+	<key>IDESourceControlProjectName</key>
+	<string>123Phim</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>2CA425CE-FC95-4F7F-9252-CF828EC4C693</key>
+		<string>https://gitlab.123.vn/123f/mobile.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>123Phim.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>2CA425CE-FC95-4F7F-9252-CF828EC4C693</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://gitlab.123.vn/123f/mobile.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>2CA425CE-FC95-4F7F-9252-CF828EC4C693</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>2CA425CE-FC95-4F7F-9252-CF828EC4C693</string>
+			<key>IDESourceControlWCCName</key>
+			<string>123phim</string>
+		</dict>
+	</array>
+</dict>
+</plist>

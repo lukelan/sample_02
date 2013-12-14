@@ -1,0 +1,54 @@
+body, div, ul, p {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    outline: 0;
+}
+body {
+    font-size: 13px;
+}
+ul {
+    list-style-type: square;
+    padding-left: 16px;
+}
+ul li {
+    margin: 5px 0;
+}
+
+.promotion {
+    padding: 0 10px 10px 10px;
+    font-size: 13px;
+    font-family: Helvetica;
+}
+.promotion .image {
+    float: left;
+    width: 75px;
+    height: 100px;
+    margin-right: 10px;
+}
+.promotion .content {
+    font-size: 13px;
+    line-height: 18px;
+}
+.promotion img {
+    width: 280px !important;
+    height: auto;
+    margin-top: 10px;
+}
+
+.share-template-description {
+    text-align: left;
+    font-size: 12px;
+    color: gray;
+}
+.about {
+    padding: 10px;
+    text-align: justify;
+    font-size: 13px;
+}
+.about ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+

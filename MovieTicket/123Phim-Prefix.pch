@@ -1,0 +1,41 @@
+//
+// Prefix header for all source files of the 'MovieTicket' target in the 'MovieTicket' project
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_3_0
+#warning "This project uses features only available in iOS SDK 3.0 and later."
+#endif
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
+#import "DefineString.h"
+#import "DefinePath.h"
+#import "DefineConstant.h"
+#import "NSString+App.h"
+#import "UIViewController+showhideTabbar.h"
+#import "UIViewController+AnimationRootView.h"
+#import "UITableViewCell+refreshLayout.h"
+#import "UIView+AnimationView.h"
+#import "NSDate+App.h"
+#import "UIFont+App.h"
+#import "UIWebView+Clean.h"
+#import "SDImageView.h"
+#import "NSString+MD5Addition.h"
+#import "UIImage+Ultility.h"
+#import "NSData+AES256.h"
+#import "NSString+SHA.h"
+#import "DictionaryMapping.h"
+#import "ArrayMapping.h"
+#import "StringMapping.h"
+#import "NSDictionary+convertDictionToStringParameter.h"
+#import "UIAlertView+UIAlertViewAdditions.h"
+#import "GoogleConversionPing.h"
+#import "Crittercism.h"
+#import <SystemConfiguration/SystemConfiguration.h>
+#import <MobileCoreServices/MobileCoreServices.h>
+#import <RestKit/RestKit.h>
+#endif

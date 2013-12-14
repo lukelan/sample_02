@@ -1,0 +1,134 @@
+			<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	
+<array>	
+	<dict>
+		<key>view_controller_name_will_show</key>
+		<array>
+			<string>FilmDetailViewController</string>
+			<string>CinemaFilmViewController</string>
+			<string>AccountViewController</string>
+		</array>
+
+		<key>dynamic_view_info</key>
+		<dict>
+			<key>background_color</key>
+			<array>
+				<real>1.0</real>
+				<real>1.0</real>
+				<real>1.0</real>
+				<real>1.0</real>
+			</array>
+			<key>background_image</key>
+			<string>http://s1.img.edn.vn//mobile//123phim//2013//04//1366277757540_world-war-z-d2bc45_640x960.jpg</string>
+				<key>frame</key>
+			<string>{{10,10},{260,260}}</string>
+			<key>sub_view</key>
+			<array>
+				<dict>
+					<key>action</key>
+	            			<dict>
+        	        			<key>action_view_controller_name</key>
+                				<string>SelectSeatViewController</string>
+
+						<key>object_properties</key>
+						<array>			
+							<string>setCurrentSession:</string>
+							<dict>
+								<key>object_name</key>
+								<string>Session</string>
+								<key>is_db_entity</key>
+								<integer>1</integer>
+								<key>object_properties</key>
+								<array>																			<string>setSession_id:</string>
+									<integer>166922</integer>
+									<string>setCinema_code:</string>
+									<string>101</string>
+									<string>setCinema_id:</string>
+									<integer>21</integer>
+									<string>setVersion_id:</string>
+									<integer>3</integer>
+									<string>setSession_time:</string>
+									<integer>393941700</integer>
+									<string>setRoom_id:</string>
+									<integer>139</integer>
+									<string>setRoom_title:</string>
+									<string>2</string>
+								</array>
+							</dict>
+
+							<string>setCurrentFilm:</string>
+							<dict>
+								<key>object_name</key>
+								<string>Film</string>
+								<key>object_getter</key>
+								<array>
+									<string>getFilmWithID:</string>
+									<integer>275</integer>
+								</array>
+							</dict>
+
+							<string>setCurrentCinemaWithDistance:</string>
+							<dict>
+								<key>object_name</key>
+								<string>CinemaWithDistance</string>
+								<key>object_getter</key>
+								<array>
+									<string>getCinemaWithDistanceWithCinemaID:</string>
+									<integer>21</integer>
+								</array>
+							</dict>
+
+							<string>setTabBarDisplayType:</string>
+							<integer>2</integer>
+						</array>
+                    			</dict>
+					<key>background_color</key>
+					<array>
+						<real>0.0</real>
+						<real>1.0</real>
+						<real>1.0</real>
+						<real>1.0</real>
+					</array>
+					<key>frame</key>
+					<string>{{10,10},{100,40}}</string>
+					<key>title_text</key>
+					<string>Click here</string>
+					<key>title_text_color</key>
+					<array>
+						<real>1.0</real>
+						<real>1.0</real>
+						<real>1.0</real>
+						<real>1.0</real>
+					</array>
+					<key>background_image1</key>
+					<string>http://s1.img.edn.vn//mobile//123phim//2013//04//1366277757540_world-war-z-d2bc45_640x960.jpg</string>
+				</dict>
+				<dict>
+					<key>action</key>
+	            			<dict></dict>
+                			<key>background_color</key>
+                			<array>
+                    				<real>1.0</real>
+						<real>0.0</real>
+						<real>1.0</real>
+						<real>0.2</real>
+					</array>
+					<key>frame</key>
+					<string>{{200,10},{40,40}}</string>
+					<key>title_text</key>
+					<string>Close</string>
+					<key>title_text_color</key>
+					<array>
+						<real>1.0</real>
+						<real>1.0</real>
+						<real>1.0</real>
+						<real>1.0</real>
+					</array>
+				</dict>
+			</array>
+		</dict>
+	</dict>
+</array>
+</plist>

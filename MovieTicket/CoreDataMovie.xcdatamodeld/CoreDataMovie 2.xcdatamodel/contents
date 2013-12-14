@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3400" systemVersion="12F45" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Cinema" representedClassName="Cinema" syncable="YES">
+        <attribute name="buy" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="cinema_address" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="cinema_id" optional="YES" attributeType="Integer 16" defaultValueString="0" spotlightIndexingEnabled="YES" syncable="YES"/>
+        <attribute name="cinema_latitude" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="cinema_longtitude" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="cinema_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="cinema_phone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="cinema_url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="cinema_wifi_pwd" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date_end" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="date_start" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="discount_type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="discount_value" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="distance" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="is_booking" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="is_cinema_favourite" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="location_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="maxSeatToBook" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="news_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="order_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="p_cinema_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="time_car" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="time_moto" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="total" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="type_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="Comment" representedClassName="Comment" syncable="YES">
+        <attribute name="avatar" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="comment_id" optional="YES" attributeType="Integer 32" defaultValueString="0" spotlightIndexingEnabled="YES" syncable="YES"/>
+        <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date_add" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date_update" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="film_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="list_image" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="order_id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="ratingFilm" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="user_name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="film" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Film" inverseName="comment" inverseEntity="Film" syncable="YES"/>
+    </entity>
+    <entity name="Film" representedClassName="Film" syncable="YES">
+        <attribute name="buy" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="date_end" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="date_start" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="discount_type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="discount_value" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="film_actors" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="film_description" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="film_description_short" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="film_duration" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="film_id" optional="YES" attributeType="Integer 16" defaultValueString="0" spotlightIndexingEnabled="YES" syncable="YES"/>
+        <attribute name="film_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="film_point_rating" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
+        <attribute name="film_total_rating" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="film_url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="film_version" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="is_like" optional="YES" attributeType="Boolean" defaultValueString="0" syncable="YES"/>
+        <attribute name="is_new" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="list_image_review" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="list_image_thumbnail_review" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="order_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="poster_url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="publish_date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="status_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="total" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="type_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="comment" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Comment" inverseName="film" inverseEntity="Comment" syncable="YES"/>
+    </entity>
+    <entity name="Ticket" representedClassName="Ticket" syncable="YES">
+        <attribute name="cinema_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date_buy" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date_show" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="film_duration" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="film_id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="film_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="film_poster_url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="film_publish_date" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="film_url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="film_version" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="invoice_no" optional="YES" attributeType="String" spotlightIndexingEnabled="YES" syncable="YES"/>
+        <attribute name="listSeat" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="order_id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="room_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="session_id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="ticket_code" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ticket_data" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="ticket_total_price" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="ticket_url" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Cinema" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Comment" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Film" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Ticket" positionX="0" positionY="0" width="0" height="0"/>
+    </elements>
+</model>
