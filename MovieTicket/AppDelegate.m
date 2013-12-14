@@ -1773,18 +1773,9 @@ double lastSentLog = 0;
                                                          withValue:[NSNumber numberWithInt:107]];
     }
     
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *path = [documentsDirectory stringByAppendingPathComponent:FILE_NAME_LIST_FILM_FAVORITE];
-    NSMutableArray *sawDetailFilm = nil;
-    BOOL fileExist = [[NSFileManager defaultManager] fileExistsAtPath:path];
-    if (fileExist)
-    {
-        sawDetailFilm = [NSMutableArray arrayWithContentsOfFile:path];
-    }
-    BOOL isNeedRelease = NO;
-    if (sawDetailFilm == nil) {
-        isNeedRelease = YES;
+    NSMutableArray *sawDetailFilm = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:STRING_KEY_LIST_FILM_FAVORITE]];
+
+    if (!sawDetailFilm) {
         sawDetailFilm = [[NSMutableArray alloc] init];
     }
     BOOL idExist = NO;
@@ -1792,15 +1783,17 @@ double lastSentLog = 0;
         if ([existId intValue] == film_id)
         {
             idExist = YES;
-            [sawDetailFilm removeObject:existId];
+//            [sawDetailFilm removeObject:existId]; // Why do we remove existed film ID?
             break;
         }
     }
-    if (NO == idExist)
+    if (!idExist)
     {
         [sawDetailFilm addObject:[NSNumber numberWithInt:film_id]];
+        // save changes
+        [[NSUserDefaults standardUserDefaults] setObject:sawDetailFilm forKey:STRING_KEY_LIST_FILM_FAVORITE];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
-    [sawDetailFilm writeToFile:path atomically:YES];
 }
 
 - (void)handleFilmLikedTouched:(FavoriteButton*)sender

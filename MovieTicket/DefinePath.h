@@ -40,6 +40,7 @@
 //define name of file store local
 #define FILE_NAME_LIST_FILM_FAVORITE @"list_film_favorite.txt"
 #define FILE_NAME_LIST_CINEMA_FAVORITE @"list_cinema_favorite.txt"
+#define STRING_KEY_LIST_FILM_FAVORITE @"STRING_KEY_LIST_FILM_FAVORITE"
 
 //Bank info dir
 #define BANK_INFO_DIR ([NSString stringWithFormat:@"%@/bankinfo",DOCUMENTS_PATH])
