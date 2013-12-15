@@ -10,7 +10,6 @@
 #ifndef MovieTicket_DefinePath_h
 #define MovieTicket_DefinePath_h
 
-
 //123mua upload
 #define UPLOAD_SERVER_LINK @"http://upload.123mua.vn/go123/upload"
 #define UPLOAD_SERVER_KEY @"$@JUYUGOGO"

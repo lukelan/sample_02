@@ -102,6 +102,7 @@ static APIManager* _sharedMySingleton = nil;
 
 - (void)RK_SendRequestFetchCD_URL:(NSURL *)pathURL postData:(NSDictionary *)temp keyPost:(NSString *)keyPost responseDescriptor:(RKResponseDescriptor *)responseDescriptor
 {
+    NSLog(@"pathURL = %@", pathURL.absoluteString);
     [[RKObjectManager sharedManager] cancelAllObjectRequestOperationsWithMethod:RKRequestMethodAny matchingPathPattern:[pathURL absoluteString]];
     //send request
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:pathURL];

@@ -222,4 +222,7 @@
 #define MAX_TIME_RETRY_GET_LIST_CINEMA [NSString outStringWithKey:@"MAX_TIME_RETRY_GET_LIST_CINEMA"]        //259200
 #define MAX_TIME_RETRY_GET_LIST_NEWS [NSString outStringWithKey:@"MAX_TIME_RETRY_GET_LIST_NEWS"]            //36000
 
+#define STRING_ALERT_OK                                             @"OK"
+#define STRING_ALERT_CONNECTION_ERROR_TITLE                         @"Offline"
+#define STRING_ALERT_CONNECTION_ERROR								@"Sorry, this function is not available in offline mode.  Please connect to the internet to perform this function"
 #endif

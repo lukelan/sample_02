@@ -240,6 +240,8 @@
 #define	ACTION_LOG_IN				1130
 #define	ACTION_LOG_OUT				1140
 #define ACTION_TICKET_SHOW_BAR_CODE	5250
+#define TIMER_REQUEST_TIMEOUT											60
+#define TIMER_REQUEST_UPLOAD_TIMEOUT                                    5*60
 
 #define IS_RETINA ([[UIScreen mainScreen] scale] > 1.0 )
 

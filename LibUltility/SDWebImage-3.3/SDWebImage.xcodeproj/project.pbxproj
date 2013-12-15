@@ -22,10 +22,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		1811A3D3185CC2550042E4BA /* SupportFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = 1811A3D1185CC2550042E4BA /* SupportFunction.h */; };
-		1811A3D4185CC2550042E4BA /* SupportFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = 1811A3D1185CC2550042E4BA /* SupportFunction.h */; };
-		1811A3D5185CC2550042E4BA /* SupportFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 1811A3D2185CC2550042E4BA /* SupportFunction.m */; };
-		1811A3D6185CC2550042E4BA /* SupportFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 1811A3D2185CC2550042E4BA /* SupportFunction.m */; };
 		4F8C1B2E1798F84800F69A04 /* WebP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F8C1B2D1798F84800F69A04 /* WebP.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		530E49E816464C25002868E7 /* SDWebImageOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 530E49E71646388E002868E7 /* SDWebImageOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		530E49E916464C26002868E7 /* SDWebImageOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 530E49E71646388E002868E7 /* SDWebImageOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -101,8 +97,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1811A3D1185CC2550042E4BA /* SupportFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SupportFunction.h; sourceTree = "<group>"; };
-		1811A3D2185CC2550042E4BA /* SupportFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SupportFunction.m; sourceTree = "<group>"; };
 		4F8C1B2D1798F84800F69A04 /* WebP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebP.framework; path = Vendors/WebP.framework; sourceTree = "<group>"; };
 		530E49E316460AE2002868E7 /* SDWebImageDownloaderOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageDownloaderOperation.h; sourceTree = "<group>"; };
 		530E49E416460AE2002868E7 /* SDWebImageDownloaderOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageDownloaderOperation.m; sourceTree = "<group>"; };
@@ -165,15 +159,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1811A3D0185CC2550042E4BA /* Support */ = {
-			isa = PBXGroup;
-			children = (
-				1811A3D1185CC2550042E4BA /* SupportFunction.h */,
-				1811A3D2185CC2550042E4BA /* SupportFunction.m */,
-			);
-			path = Support;
-			sourceTree = "<group>";
-		};
 		53922D64148C55810056699D = {
 			isa = PBXGroup;
 			children = (
@@ -207,7 +192,6 @@
 		53922D74148C55820056699D /* SDWebImage */ = {
 			isa = PBXGroup;
 			children = (
-				1811A3D0185CC2550042E4BA /* Support */,
 				53922D88148C56230056699D /* SDWebImageCompat.h */,
 				5340674F167780C40042B59E /* SDWebImageCompat.m */,
 				530E49E71646388E002868E7 /* SDWebImageOperation.h */,
@@ -290,7 +274,6 @@
 				531041DB157EAFA400BBABC3 /* UIImageView+WebCache.h in Headers */,
 				531041DC157EAFA400BBABC3 /* MKAnnotationView+WebCache.h in Headers */,
 				530E49E916464C26002868E7 /* SDWebImageOperation.h in Headers */,
-				1811A3D4185CC2550042E4BA /* SupportFunction.h in Headers */,
 				530E49EB16464C7F002868E7 /* SDWebImageDownloaderOperation.h in Headers */,
 				A18A6CC8172DC28500419892 /* UIImage+GIF.h in Headers */,
 				A18A6CCE172DC33A00419892 /* NSData+GIF.h in Headers */,
@@ -308,7 +291,6 @@
 				53761319155AD0D5005750A4 /* SDWebImageDecoder.h in Headers */,
 				5376131A155AD0D5005750A4 /* SDWebImageDownloader.h in Headers */,
 				5376131C155AD0D5005750A4 /* SDWebImageManager.h in Headers */,
-				1811A3D3185CC2550042E4BA /* SupportFunction.h in Headers */,
 				5376131E155AD0D5005750A4 /* SDWebImagePrefetcher.h in Headers */,
 				5376131F155AD0D5005750A4 /* UIButton+WebCache.h in Headers */,
 				53761320155AD0D5005750A4 /* UIImageView+WebCache.h in Headers */,
@@ -428,7 +410,6 @@
 				531041C6157EAFA400BBABC3 /* SDWebImageDownloader.m in Sources */,
 				531041C7157EAFA400BBABC3 /* SDWebImageManager.m in Sources */,
 				531041C8157EAFA400BBABC3 /* SDWebImagePrefetcher.m in Sources */,
-				1811A3D6185CC2550042E4BA /* SupportFunction.m in Sources */,
 				531041C9157EAFA400BBABC3 /* UIButton+WebCache.m in Sources */,
 				531041CA157EAFA400BBABC3 /* UIImageView+WebCache.m in Sources */,
 				531041CB157EAFA400BBABC3 /* MKAnnotationView+WebCache.m in Sources */,
@@ -449,7 +430,6 @@
 				5376130B155AD0D5005750A4 /* SDWebImageDownloader.m in Sources */,
 				5376130C155AD0D5005750A4 /* SDWebImageManager.m in Sources */,
 				5376130D155AD0D5005750A4 /* SDWebImagePrefetcher.m in Sources */,
-				1811A3D5185CC2550042E4BA /* SupportFunction.m in Sources */,
 				5376130E155AD0D5005750A4 /* UIButton+WebCache.m in Sources */,
 				5376130F155AD0D5005750A4 /* UIImageView+WebCache.m in Sources */,
 				530E49EC16464C84002868E7 /* SDWebImageDownloaderOperation.m in Sources */,

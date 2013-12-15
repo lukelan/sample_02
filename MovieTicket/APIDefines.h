@@ -169,4 +169,15 @@
 #define ID_REQUEST_FILM_POST_UPDATE_FAVOURITE 53
 #define MAX_ID_REQUEST 54
 
+///////////////////////////////////////////////////////////////////////////
+//////////////////////////       API LINKS       //////////////////////////
+///////////////////////////////////////////////////////////////////////////
+#pragma mark - API Links
+#define STRING_REQUEST_ROOT                                         ROOT_SERVER
+
+#define STRING_REQUEST_URL_GET_LIST_CINEMA_BY_LOCATION              [NSString stringWithFormat:@"%@method=Cinema.getList&location_id=", STRING_REQUEST_ROOT]
+#define STRING_REQUEST_URL_POST_LOG                                 [NSString stringWithFormat:@"%@method=Logs.write&", STRING_REQUEST_ROOT]
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
 #endif

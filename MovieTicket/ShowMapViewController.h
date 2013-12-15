@@ -16,9 +16,10 @@
 #import "PlaceMark.h"
 #import "CustomGAITrackedViewController.h"
 
+@class CinemaTableViewPlaceItem;
 @protocol ShowMapViewControllerDelegate <NSObject>
 -(void)receiveLocationData:(Position*)locationData andMapStatusOfCenter:(CLLocationCoordinate2D)center andMapStatusOfSpan:(MKCoordinateSpan)span;
--(void)pushFilmListCinemaView: (CinemaWithDistance *)cinemaWithDistance;
+-(void)pushFilmListCinemaView: (CinemaTableViewPlaceItem *)item;
 @end
 
 enum MapType {

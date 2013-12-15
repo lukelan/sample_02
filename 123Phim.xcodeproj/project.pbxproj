@@ -13,6 +13,8 @@
 		1811A3C7185C32F40042E4BA /* CinemaTableViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1811A3BF185C32F40042E4BA /* CinemaTableViewItem.m */; };
 		1811A3C8185C32F40042E4BA /* CinemaTableViewLocationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1811A3C1185C32F40042E4BA /* CinemaTableViewLocationItem.m */; };
 		1811A3C9185C32F40042E4BA /* CinemaTableViewPlaceItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1811A3C3185C32F40042E4BA /* CinemaTableViewPlaceItem.m */; };
+		1811A3DA185D56930042E4BA /* AppAPIRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1811A3D9185D56930042E4BA /* AppAPIRequestManager.m */; };
+		1811A3DD185D59420042E4BA /* SupportFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 1811A3DC185D59420042E4BA /* SupportFunction.m */; };
 		2810C6BE1713BFD5007F4D9F /* ShareTemplateViewDescription.html in Resources */ = {isa = PBXBuildFile; fileRef = 2810C6BD1713BFD5007F4D9F /* ShareTemplateViewDescription.html */; };
 		2810C6C21713C929007F4D9F /* comment_box_full.png in Resources */ = {isa = PBXBuildFile; fileRef = 2810C6C01713C929007F4D9F /* comment_box_full.png */; };
 		2810C6C31713C929007F4D9F /* comment_box_full@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2810C6C11713C929007F4D9F /* comment_box_full@2x.png */; };
@@ -554,6 +556,10 @@
 		1811A3C1185C32F40042E4BA /* CinemaTableViewLocationItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CinemaTableViewLocationItem.m; sourceTree = "<group>"; };
 		1811A3C2185C32F40042E4BA /* CinemaTableViewPlaceItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinemaTableViewPlaceItem.h; sourceTree = "<group>"; };
 		1811A3C3185C32F40042E4BA /* CinemaTableViewPlaceItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CinemaTableViewPlaceItem.m; sourceTree = "<group>"; };
+		1811A3D8185D56930042E4BA /* AppAPIRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppAPIRequestManager.h; sourceTree = "<group>"; };
+		1811A3D9185D56930042E4BA /* AppAPIRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppAPIRequestManager.m; sourceTree = "<group>"; };
+		1811A3DB185D59420042E4BA /* SupportFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SupportFunction.h; sourceTree = "<group>"; };
+		1811A3DC185D59420042E4BA /* SupportFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SupportFunction.m; sourceTree = "<group>"; };
 		1CA13FBF8D244CACA38AFD54 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2810C6BD1713BFD5007F4D9F /* ShareTemplateViewDescription.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ShareTemplateViewDescription.html; sourceTree = "<group>"; };
 		2810C6C01713C929007F4D9F /* comment_box_full.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = comment_box_full.png; sourceTree = "<group>"; };
@@ -1373,6 +1379,17 @@
 			path = TableItems;
 			sourceTree = "<group>";
 		};
+		1811A3D7185D56930042E4BA /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				1811A3DB185D59420042E4BA /* SupportFunction.h */,
+				1811A3DC185D59420042E4BA /* SupportFunction.m */,
+				1811A3D8185D56930042E4BA /* AppAPIRequestManager.h */,
+				1811A3D9185D56930042E4BA /* AppAPIRequestManager.m */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
 		289BBDB0170047CC00B69B31 /* css */ = {
 			isa = PBXGroup;
 			children = (
@@ -1609,6 +1626,7 @@
 		4716E825166F4EBE00BAF3AF /* MovieTicket */ = {
 			isa = PBXGroup;
 			children = (
+				1811A3D7185D56930042E4BA /* Support */,
 				2E889B2E1675D334003E074A /* Resource */,
 				4FDAAF9816DB71120060BC34 /* AppDelegate */,
 				47A60D8F1671919A009A5996 /* APIManager */,
@@ -3344,6 +3362,7 @@
 				4F4DF8D816C09EC600458F8F /* CoreDataMovie.xcdatamodeld in Sources */,
 				4FE4558416C209A6007FE215 /* Session.m in Sources */,
 				3D1EABAB16D319DA00C972C7 /* CommentFilmView.m in Sources */,
+				1811A3DD185D59420042E4BA /* SupportFunction.m in Sources */,
 				4FDAAF9716DB70C10060BC34 /* MainViewController.m in Sources */,
 				A902D7B016DCB03E00D5DC4C /* FavoriteFilmViewController.m in Sources */,
 				A908E62C16E4C8280023D199 /* ChooseCityViewController.m in Sources */,
@@ -3517,6 +3536,7 @@
 				4F268243180FA39100D27823 /* RKXMLReaderSerialization.m in Sources */,
 				4F268244180FA39100D27823 /* XMLReader.m in Sources */,
 				4F96EC0D181666CB002E08AB /* NewsBannerCell.m in Sources */,
+				1811A3DA185D56930042E4BA /* AppAPIRequestManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
