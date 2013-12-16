@@ -2,7 +2,7 @@
 //  CinemaTableViewLocationCell.m
 //  123Phim
 //
-//  Created by Tai Truong on 12/8/13.
+//  Created by Trongvm on 12/8/13.
 //  Copyright (c) 2013 Phuong. Nguyen Minh. All rights reserved.
 //
 
@@ -33,7 +33,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // image
-        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 0, 49, 49)];
+        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 1, 49, 48)];
         [_imageView setImage:[UIImage imageNamed:@"location.png"]];
         [self.contentView addSubview:_imageView];
         // title
@@ -44,8 +44,9 @@
         [self.contentView addSubview:_titleLbl];
         
         // address
-        _addressLbl = [[UILabel alloc] initWithFrame:CGRectMake(64, 23 , 220, 21)];
+        _addressLbl = [[UILabel alloc] initWithFrame:CGRectMake(64, 23 , 224, 21)];
         _addressLbl.textColor = [UIColor grayColor];
+        _addressLbl.numberOfLines = 2;
         _addressLbl.font = [UIFont getFontNormalSize10];
         [self.contentView addSubview:_addressLbl];
     }
@@ -67,13 +68,24 @@
     _titleLbl.text = item.title;
     _addressLbl.text = item.address;
     if (item.isActive) {
-        [_imageView setImage:[UIImage imageNamed:@"location_active"]];
+        // Check iOS7
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+            [_imageView setImage:[UIImage imageNamed:@"location_active7"]];
+        } else {
+            [_imageView setImage:[UIImage imageNamed:@"location_active"]];
+        }
         _titleLbl.hidden = NO;
     }
     else {
-        [_imageView setImage:[UIImage imageNamed:@"location.png"]];
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+            [_imageView setImage:[UIImage imageNamed:@"location7"]];
+        } else {
+            [_imageView setImage:[UIImage imageNamed:@"location.png"]];
+        }
         _titleLbl.hidden = YES;
     }
+    
+//    self.backgroundColor = [UIColor redColor];
     
 }
 

@@ -1,5 +1,5 @@
 /*
- * $Author: kidbaw $
+ * $Author: Trongvm $
  * $Revision: 59 $
  * $Date: 2012-03-23 22:44:48 +0700 (Fri, 23 Mar 2012) $
  *

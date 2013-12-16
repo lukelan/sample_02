@@ -2,7 +2,7 @@
 //  CinemaTableViewPlaceCell.m
 //  123Phim
 //
-//  Created by Tai Truong on 12/8/13.
+//  Created by Trongvm on 12/8/13.
 //  Copyright (c) 2013 Phuong. Nguyen Minh. All rights reserved.
 //
 
@@ -39,7 +39,7 @@
         // content
         //
         // status image
-        _statusImgView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 0, 49, 49)];
+        _statusImgView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 1, 49, 48)];
         [self.contentView addSubview:_statusImgView];
         
         // title
@@ -50,33 +50,34 @@
         
         // address
         _addressLbl = [[UILabel alloc] initWithFrame:CGRectMake(64, 23 , 220, 21)];
+        _addressLbl.textColor = [UIColor grayColor];
         _addressLbl.font = [UIFont getFontNormalSize10];
         [self.contentView addSubview:_addressLbl];
         
-//        // discount
-//        _discountImgView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 7, 40, 40)];
-//        [_discountImgView setImage:[UIImage imageNamed:@"film_sale_off_small.png"]];
-//        [self.contentView addSubview:_discountImgView];
-//        
-//        _discountLbl = [[UILabel alloc] initWithFrame:CGRectMake(10, 10 , 40, 20)];
-//        _discountLbl.textColor = [UIColor whiteColor];
-//        _discountLbl.font = [UIFont fontWithName:@"Helvetica-Bold" size:14.0f];
-//        [self.contentView addSubview:_discountLbl];
+        // discount
+        _discountImgView = [[UIImageView alloc] initWithFrame:CGRectMake(7, 7, 38, 26)];
+        [_discountImgView setImage:[UIImage imageNamed:@"film_sale_off_small.png"]];
+        [self.contentView addSubview:_discountImgView];
         
-        UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(10, kCinemaTableViewPlaceCell_ContentHeight - 1, 310, 0.25f)];
-        separator.backgroundColor = [UIColor grayColor];
+        _discountLbl = [[UILabel alloc] initWithFrame:CGRectMake(10, 8 , 40, 20)];
+        _discountLbl.textColor = [UIColor whiteColor];
+        _discountLbl.font = [UIFont fontWithName:@"Helvetica-Bold" size:14.0f];
+        [self.contentView addSubview:_discountLbl];
+        
+        UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(10, kCinemaTableViewPlaceCell_ContentHeight - 1, 310, 0.35f)];
+        separator.backgroundColor = [UIColor lightGrayColor];
         [self.contentView addSubview:separator];
         
         //
         // footer
         //
         // image
-        _footerImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, kCinemaTableViewPlaceCell_ContentHeight + 4, 296, 22)];
+        _footerImage = [[UIImageView alloc] initWithFrame:CGRectMake(12, kCinemaTableViewPlaceCell_ContentHeight + 4, 296, 22)];
         _footerImage.image = [UIImage imageNamed:@"theater_distance_time.png"];
         [self.contentView addSubview:_footerImage];
         
         // distance
-        _distanceLbl = [[UILabel alloc] initWithFrame:CGRectMake(37, kCinemaTableViewPlaceCell_ContentHeight + 2 , 80, 30)];
+        _distanceLbl = [[UILabel alloc] initWithFrame:CGRectMake(49, kCinemaTableViewPlaceCell_ContentHeight + 2 , 80, 30)];
         _distanceLbl.backgroundColor  = [UIColor clearColor];
         _distanceLbl.textColor = [UIColor grayColor];
         _distanceLbl.font = [UIFont getFontBoldSize10];
@@ -112,6 +113,7 @@
         [self.contentView.subviews makeObjectsPerformSelector:@selector(setOpaque:) withObject:@(YES)];
         
         _youAreHereLbl.hidden = _youAreHereImage.hidden = YES;
+        
     }
     return self;
 }
@@ -128,8 +130,20 @@
     [super setObject:object];
     
     CinemaTableViewPlaceItem *item = object;
-    self.statusImgView.image = item.isOnline ? [UIImage imageNamed:@"online"] : [UIImage imageNamed:@"online_disable"];
-//    self.discountLbl.text = item.discount;
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+        self.statusImgView.image = item.isOnline ? [UIImage imageNamed:@"online7"] : [UIImage imageNamed:@"online_disable7"];
+    } else {
+        self.statusImgView.image = item.isOnline ? [UIImage imageNamed:@"online"] : [UIImage imageNamed:@"online_disable"];
+    }
+    
+    if (!item.discount) {
+        self.discountLbl.hidden = _discountImgView.hidden = YES;
+    } else {
+        self.discountLbl.hidden = _discountImgView.hidden = NO;
+        self.discountLbl.text = item.discount;
+//        self.discountLbl.text = @"-20%";
+    }
     self.titleLbl.text = item.title;
     self.addressLbl.text = item.address;
     _youAreHereImage.hidden = _youAreHereLbl.hidden = !item.youAreHere;

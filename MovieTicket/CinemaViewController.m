@@ -9,6 +9,7 @@
 #define TEXT_CASE2 @"Vị trí trung tâm được tính từ: %@. Vui lòng \"Bật định vị\" để có thông tin chính xác hơn."
 #import "CinemaViewController.h"
 #import "CinemaWithDistance.h"
+#import "APIManager.h"
 #import "DistanceTimeCell.h"
 #import "CinemaLocationCal.h"
 #import "CinemaContentCell.h"
@@ -18,9 +19,6 @@
 #import "CinemaTableViewCell.h"
 #import "CinemaTableViewLocationCell.h"
 #import "CinemaTableViewPlaceCell.h"
-#import "AppAPIRequestManager.h"
-#import "SupportFunction.h"
-#import "UIDevice+IdentifierAddition.h"
 
 #define STRING_KEY_ITEMS @"items"
 #define STRING_KEY_SECTION_TITLE @"sectionTitle"
@@ -119,7 +117,7 @@ static bool distanceGetFromCurrentPos = NO;
         NSError *error = nil;
         [self.fetchedResultsController performFetch:&error];
         
-//        LOG_123PHIM(@"aaaa %@",[self.fetchedResultsController fetchedObjects]);
+        //        LOG_123PHIM(@"aaaa %@",[self.fetchedResultsController fetchedObjects]);
         
         NSAssert(!error, @"Error performing fetch request: %@", error);
     }
@@ -129,7 +127,7 @@ static bool distanceGetFromCurrentPos = NO;
 #pragma mark - NSFetchedResultsControllerDelegate
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
-//    LOG_123PHIM(@"sajdfkldjslkafjkdlsajlkfdsajklfd");
+    //    LOG_123PHIM(@"sajdfkldjslkafjkdlsajlkfdsajklfd");
     [self loadDataForView];
 }
 
@@ -160,13 +158,13 @@ static bool distanceGetFromCurrentPos = NO;
                                                    [UIColor whiteColor], UITextAttributeTextColor,
                                                    nil] forState:UIControlStateNormal];
         self.yourPosition = [[Position alloc] init];
-        self.yourPosition.address = @"";        
+        self.yourPosition.address = @"";
         [self.tabBarItem setTitle:@"Rạp chiếu"];
-
+        
         cinemaList=[[NSMutableArray alloc]init];
         _cinemaListWithDistance = [[NSMutableArray alloc] init];
-               
-        self.isLoadedCinemaComplete = NO;        
+        
+        self.isLoadedCinemaComplete = NO;
         self.centerOfCinemaGroupMap = CLLocationCoordinate2DMake(0, 0);
         self.centerOfPositionChoiceMap = CLLocationCoordinate2DMake(0, 0);
         
@@ -186,6 +184,8 @@ static bool distanceGetFromCurrentPos = NO;
         _displayLocation = [[Position alloc] init];
         
         [self loadDataForView];
+        Location* city = [APIManager loadLocationObject];
+        [[APIManager sharedAPIManager] getListAllCinemaByLocation:city.location_id context:self];
         
         // TrongV - 08/12/2013 - Show Tab bar as default
         self.tabBarDisplayType = TAB_BAR_DISPLAY_SHOW;
@@ -218,7 +218,7 @@ static bool distanceGetFromCurrentPos = NO;
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     //load ultility
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-
+    
     if(!self.isLoadedCinemaComplete && [AppDelegate isNetWorkValiable])
     {
         [self showLoadingScreenWithType:LOADING_TYPE_WITHOUT_TABBAR];
@@ -259,19 +259,6 @@ static bool distanceGetFromCurrentPos = NO;
     
     [self.view setBackgroundColor:[UIFont colorBackGroundApp]];
     self.trackedViewName = CINEMA_VIEW_NAME;
-    
-    // load data
-    [self loadListCinema];
-}
-
--(void)loadListCinema
-{
-    // load data
-    Location* city = [APIManager loadLocationObject];
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:@(city.location_id), @"location_id", nil];
-    [[AppAPIRequestManager sharedClient] operationWithType:ENUM_API_REQUEST_TYPE_GET_LIST_CINEMA_BY_LOCATION andPostMethodKind:NO andParams:params update:NO inView:nil isQueued:NO andSimultaneous:YES completeBlock:^(id responseObject) {
-        [self reloadInterfaceWithData:[responseObject objectForKey:@"result"]];
-    }];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
@@ -284,7 +271,6 @@ static bool distanceGetFromCurrentPos = NO;
     // Dispose of any resources that can be recreated.
 }
 
-
 #pragma mark - Table view data source
 -(Class)cellClassForObject:(id)object
 {
@@ -294,7 +280,7 @@ static bool distanceGetFromCurrentPos = NO;
     else if ([object isMemberOfClass:[CinemaTableViewPlaceItem class]])
     {
         return [CinemaTableViewPlaceCell class];
-        }
+    }
     
     return [CinemaTableViewPlaceCell class];
 }
@@ -312,7 +298,7 @@ static bool distanceGetFromCurrentPos = NO;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{    
+{
     id object = [[[self.datasource objectAtIndex:indexPath.section] objectForKey:STRING_KEY_ITEMS] objectAtIndex:indexPath.row];
     Class cellClass = [self cellClassForObject:object];
     return [cellClass tableView:self.tableView rowHeightForObject:object];
@@ -323,22 +309,22 @@ static bool distanceGetFromCurrentPos = NO;
     id object = [[[self.datasource objectAtIndex:indexPath.section] objectForKey:STRING_KEY_ITEMS] objectAtIndex:indexPath.row];
     Class cellClass = [self cellClassForObject:object];
     NSString *indentifier = [cellClass description];
-        
+    
     CinemaTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:indentifier];
     if (!cell) {
         cell = [[cellClass alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
         cell.delegate = self;
-            }
-           
+    }
+    
     if ([cell isKindOfClass:[CinemaTableViewCell class]]) {
         [cell setObject:object];
-        }
-        
+    }
+    
     return cell;
-            }
+}
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-            {
+{
     NSString *title = [[self.datasource objectAtIndex:section] valueForKey:STRING_KEY_SECTION_TITLE];
     if (title) {
         UIView* ret = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320.0f, 21)];
@@ -347,21 +333,22 @@ static bool distanceGetFromCurrentPos = NO;
         [lblRatingPoint setBackgroundColor:[UIColor clearColor]];
         [lblRatingPoint setTextColor:[UIColor blackColor]];
         [ret addSubview:lblRatingPoint];
-            
+        
         lblRatingPoint.text = title;
-//        ret.backgroundColor = [UIColor greenColor];
+        //        ret.backgroundColor = [UIColor greenColor];
         return ret;
-                }
+    }
     return nil;
-                }
-                
+}
+
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-                {
+{
     NSString *title = [[self.datasource objectAtIndex:section] valueForKey:STRING_KEY_SECTION_TITLE];
     if (title) {
         return 22;
     }
-    return title ? 22 : 0;
+    return  0;
+//    return title ? 22 : 0;
 }
 
 #pragma mark - CinemaTableViewCellDelegate
@@ -369,8 +356,8 @@ static bool distanceGetFromCurrentPos = NO;
 {
     if (!self.isLoadedCinemaComplete) {
         return;
-}
-
+    }
+    
     AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
     if ([object isMemberOfClass:[CinemaTableViewLocationItem class]])
     {
@@ -385,16 +372,21 @@ static bool distanceGetFromCurrentPos = NO;
     }
     else
     {
-            CinemaTableViewPlaceItem *item = object;
-            [self pushFilmListCinemaView: item];
-            
-            // send log to 123phim server
-            [[APIManager sharedAPIManager] sendLogToSever123PhimRequestURL:NSStringFromClass([CinemaFilmViewController class])
-                                                                  comeFrom:delegate.currentView
-                                                              withActionID:ACTION_CINEMA_VIEW
-                                                             currentFilmID:[NSNumber numberWithInt:NO_FILM_ID]
-                                                               currentCinemaID: item.cinema_id
-                                                           returnCodeValue:0 context:nil];
+        for (CinemaWithDistance *cinemaWithDistance in self.cinemaListWithDistance) {
+            if ([cinemaWithDistance.cinema.cinema_id integerValue] == [[object cinema_id] integerValue]) {
+                [self pushFilmListCinemaView: cinemaWithDistance];
+                
+                // send log to 123phim server
+                [[APIManager sharedAPIManager] sendLogToSever123PhimRequestURL:NSStringFromClass([CinemaFilmViewController class])
+                                                                      comeFrom:delegate.currentView
+                                                                  withActionID:ACTION_CINEMA_VIEW
+                                                                 currentFilmID:[NSNumber numberWithInt:NO_FILM_ID]
+                                                               currentCinemaID: cinemaWithDistance.cinema.cinema_id
+                                                               returnCodeValue:0 context:nil];
+                break;
+            }
+        }
+        
     }
 }
 
@@ -462,7 +454,7 @@ static bool distanceGetFromCurrentPos = NO;
     {
         strDes = TEXT_CASE2;
         [self loadCinemaListDefault];
-    }    
+    }
 }
 
 - (void) loadCinemaListDefault
@@ -473,24 +465,24 @@ static bool distanceGetFromCurrentPos = NO;
     {
         CinemaWithDistance* cinema_distane = [[CinemaWithDistance alloc] init];
         cinema_distane.distance = [theCinema.distance floatValue];
-
+        
         cinema_distane.cinema = theCinema;
         cinema_distane.driving_time = [theCinema.time_car integerValue];
         [listTemp addObject:cinema_distane];
-    }    
+    }
     self.cinemaListWithDistance = listTemp;//ENTRY
     listTemp = nil;
     //reload table
-//    [_tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO]; // do this on main thread to fixing bug show wrong data
+    //    [_tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO]; // do this on main thread to fixing bug show wrong data
     [(AppDelegate *)[[UIApplication sharedApplication] delegate] setArrayCinemaDistance:self.cinemaListWithDistance];
-        
+    
     [self reloadTableData];
     self.isLoadedCinemaComplete = YES;
 }
 
 - (void)getDistanceFinish:(NSMutableArray *)list
 {
-
+    
     if (list == nil)
     {
         // get distance failed
@@ -498,7 +490,7 @@ static bool distanceGetFromCurrentPos = NO;
         return;
     }
     self.cinemaListWithDistance = list;//ENTRY
-
+    
     //set cinema list of delegate(with distance)
     AppDelegate  *app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [app performSelectorOnMainThread:@selector(setArrayCinemaDistance:) withObject:list waitUntilDone:YES];
@@ -509,22 +501,13 @@ static bool distanceGetFromCurrentPos = NO;
 
 #pragma mark - ShowMapViewControlerDelegate
 -(void)receiveLocationData:(Position*)locationData andMapStatusOfCenter:(CLLocationCoordinate2D)center andMapStatusOfSpan:(MKCoordinateSpan)span
-{   
+{
     self.centerOfPositionChoiceMap = center;
     self.spanOfPositionChoiceMap = span;
 }
 
--(void)pushFilmListCinemaView:(CinemaTableViewPlaceItem *)item
+-(void)pushFilmListCinemaView:(CinemaWithDistance *)cinemaWithDistance
 {
-//    Cinema *theCinema = [[Cinema alloc] init];
-    
-    CinemaWithDistance* cinemaWithDistance = [[CinemaWithDistance alloc] init];
-    cinemaWithDistance.distance = [item.distance floatValue];
-    
-    cinemaWithDistance.cinema = nil;
-    cinemaWithDistance.driving_time = [item.estimateTimeCar integerValue];
-
-    
     CinemaFilmViewController* cinemaFilm = [[CinemaFilmViewController alloc] initWithNibName:@"CinemaFilmTable" bundle:[NSBundle mainBundle]];
     cinemaFilm.curCinemaDistance = cinemaWithDistance;
     [cinemaFilm setHidesBottomBarWhenPushed:YES];
@@ -537,7 +520,6 @@ static bool distanceGetFromCurrentPos = NO;
 {
     // send log to 123phim server
     AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
-    
     [[APIManager sharedAPIManager] sendLogToSever123PhimRequestURL:NSStringFromClass([ShowMapViewController class])
                                                           comeFrom:delegate.currentView
                                                       withActionID:ACTION_MAP_VIEW
@@ -556,7 +538,7 @@ static bool distanceGetFromCurrentPos = NO;
 
 - (void)choosenCity
 {
-//    LOG_123PHIM(@"choosenCity");
+    //    LOG_123PHIM(@"choosenCity");
     ChooseCityViewController* chooseCityViewController = [[ChooseCityViewController alloc] init];
     chooseCityViewController.chosenCity = self.yourCity;
     [chooseCityViewController setHidesBottomBarWhenPushed:YES];
@@ -566,7 +548,7 @@ static bool distanceGetFromCurrentPos = NO;
 #pragma mark - handle selector
 - (void)handleNewCity
 {
-//    LOG_123PHIM(@"cinema handleNewCity");
+    //    LOG_123PHIM(@"cinema handleNewCity");
     Location* newCity = [APIManager loadLocationObject];
     self.isLoadedCinemaComplete = NO;
     // set your chosen city
@@ -575,8 +557,8 @@ static bool distanceGetFromCurrentPos = NO;
     [NSFetchedResultsController deleteCacheWithName:@"cinema"];
     _fetchedResultsController = nil;
     isChangeNewCity = YES;
-//    [self loadDataForView];
-//    [self loadCinemaByLocationId:newCity.location_id];
+    //    [self loadDataForView];
+    //    [self loadCinemaByLocationId:newCity.location_id];
     // update display position
     [self updateDisplayLocation];
     
@@ -584,9 +566,9 @@ static bool distanceGetFromCurrentPos = NO;
 
 - (void)loadCinemaByLocationId: (NSInteger)locationId
 {
-//    [self.cinemaList performSelectorOnMainThread:@selector(removeAllObjects) withObject:nil waitUntilDone:YES];
+    //    [self.cinemaList performSelectorOnMainThread:@selector(removeAllObjects) withObject:nil waitUntilDone:YES];
     if ([AppDelegate isNetWorkValiable]) {
-        [self loadListCinema];
+        [[APIManager sharedAPIManager] getListAllCinemaByLocation:locationId context:self];
     }
 }
 
@@ -630,105 +612,13 @@ static bool distanceGetFromCurrentPos = NO;
         CinemaWithDistance* cinema = [cinemaUnbookingList objectAtIndex:i];
         [cinemaBookingList addObject:cinema];
     }
-
+    
     return cinemaBookingList;
     
 }
 
--(void)reloadInterfaceWithData:(NSArray*)cinemas
-{
-    // clean datasource
-    [self.datasource removeAllObjects];
-    // location cell
-    NSString *currentLocation = @"";
-    NSString *address = @"";
-    BOOL isLocationActive = NO;
-    if ([APIManager getBooleanInAppForKey:KEY_STORE_IS_SHOW_MY_LOCATION] == YES && !isNeedReloadCell)
-    {
-        currentLocation = @"Vị trí hiện tại";
-        address = self.yourPosition.address;
-        isLocationActive = YES;
-    }
-    else {
-        address = [NSString stringWithFormat:strDes, self.yourCity.center_name];
-    }
-    CinemaTableViewLocationItem *locationItem = [[CinemaTableViewLocationItem alloc] initWithTitle:currentLocation andAddress:address isActive:isLocationActive];
-    [self.datasource addObject:[NSDictionary dictionaryWithObjectsAndKeys:@[locationItem], STRING_KEY_ITEMS, nil]];
-    
-    // favorite places
-    NSMutableArray *favoritePlaces = [NSMutableArray array];
-    NSMutableArray *places = [NSMutableArray array];
-
-    for (NSInteger i = 0; i < [cinemas count] ; i++) {
-        NSDictionary* dic = [SupportFunction repairingDictionaryWith:[cinemas objectAtIndex:i]];
-        CinemaTableViewPlaceItem *item = [[CinemaTableViewPlaceItem alloc] initWithTitle:dic[@"cinema_name"] andAddress:dic[@"cinema_address" ]];
-        item.cinema_id = dic[@"cinema_id"];
-        item.isOnline = [[dic valueForKey:@"is_booking"] integerValue] == 1;
-        item.isLike = NO;
-        CGFloat distance = [dic[@"distance"] floatValue] / 1000;
-        if( [self isDistanceFromYourPos] && distance < MIN_DISTANCE_TO_CINEMA )
-        {
-            item.youAreHere = YES;
-        }
-        
-        if ([dic objectForKey:@"discount_type"]) {
-            NSInteger discountType = [[dic objectForKey:@"discount_type"] integerValue];
-            if (discountType == ENUM_DISCOUNT_PERCENT)
-            {
-                item.discount = [NSString stringWithFormat:@"-%@%@", [dic objectForKey:@"discount_value"],@"%"];
-            }
-            else if (discountType == ENUM_DISCOUNT_MONEY)
-            {
-                item.discount = [NSString stringWithFormat:@"-%dK", [[dic objectForKey:@"discount_value"] integerValue] /1000];
-            }
-        }
-        
-        // distance
-        
-        NSString* distanceString = [NSString stringWithFormat:@"%.01f Km",distance];
-        if (distance > 20.0)
-        {
-            item.distance = @"20+";
-            item.estimateTimeBike = @"...";
-            item.estimateTimeCar = @"...";
-            
-        }else{
-            NSInteger timeCarMinutes = [[dic valueForKey:@"time_car"] floatValue]/60;
-            NSInteger timeCarHourPart = timeCarMinutes / 60;
-            NSInteger timeCarMiniPart = timeCarMinutes % 60;
-            
-            NSInteger timeMotoMinutes = timeCarMinutes * 1.2;
-            NSInteger timeMotoHourPart = timeMotoMinutes / 60;
-            NSInteger timeMotoMiniPart = timeMotoMinutes % 60;
-            
-            item.distance = distanceString;
-            item.estimateTimeBike = [NSString stringWithFormat:@"%@ %@", (timeMotoHourPart > 0?([NSString stringWithFormat:@"%d giờ", timeMotoHourPart]):(@"")), (timeMotoMiniPart > 0?([NSString stringWithFormat:@"%d phút", timeMotoMiniPart]):(@"1 phút"))];
-            item.estimateTimeCar = [NSString stringWithFormat:@"%@ %@", (timeCarHourPart > 0?([NSString stringWithFormat:@"%d giờ", timeCarHourPart]):(@"")), (timeCarMiniPart > 0?([NSString stringWithFormat:@"%d phút", timeCarMiniPart]):(@"1 phút"))];
-        }
-        
-        // add to array
-        if (i < numberCinemaFavorite) {
-            [favoritePlaces addObject:item];
-        }
-        else {
-            [places addObject:item];
-        }
-        
-    }
-    
-    // add to datasource
-    if (favoritePlaces.count > 0) {
-        [self.datasource addObject:[NSDictionary dictionaryWithObjectsAndKeys:TITLE_SUPPORT_BUY_TICKET_ONLINE_123PHIM, STRING_KEY_SECTION_TITLE, favoritePlaces, STRING_KEY_ITEMS, nil]];
-    }
-    if (places.count > 0) {
-        [self.datasource addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"Rạp xung quanh", STRING_KEY_SECTION_TITLE, places, STRING_KEY_ITEMS, nil]];
-    }
-    
-    [self.tableView reloadData];
-}
-
 - (void)reloadTableData
-{   
+{
     //order
     self.cinemaListWithDistance = [self orderCinemaListWithDistance:self.cinemaListWithDistance];
     
@@ -814,28 +704,28 @@ static bool distanceGetFromCurrentPos = NO;
     if (places.count > 0) {
         [self.datasource addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"Rạp xung quanh", STRING_KEY_SECTION_TITLE, places, STRING_KEY_ITEMS, nil]];
     }
-
+    
     [self.tableView reloadData];
 }
 
 - (BOOL)isDistanceFromYourPos
 {
     BOOL ret = YES;
-
-        BOOL locationOn = [APIManager getBooleanInAppForKey:KEY_STORE_IS_SHOW_MY_LOCATION];
-        if (locationOn == YES) {
-            //get distance from user current position -> city
-            CLLocation* fromLocation = [[CLLocation alloc] initWithLatitude:self.yourPosition.positionCoodinate2D.latitude longitude:self.yourPosition.positionCoodinate2D.longitude];
-            CLLocation* toLocation = [[CLLocation alloc] initWithLatitude:self.yourCity.latitude longitude:self.yourCity.longtitude];
-            CGFloat distanceFromUserToCity = ([toLocation distanceFromLocation:fromLocation] / 1000)*1.3; // unit: km
-            if (distanceFromUserToCity >= MAX_DISTANCE_TO_CINEMA)
-            {
-                ret = NO;
-            }
-        }else{
+    
+    BOOL locationOn = [APIManager getBooleanInAppForKey:KEY_STORE_IS_SHOW_MY_LOCATION];
+    if (locationOn == YES) {
+        //get distance from user current position -> city
+        CLLocation* fromLocation = [[CLLocation alloc] initWithLatitude:self.yourPosition.positionCoodinate2D.latitude longitude:self.yourPosition.positionCoodinate2D.longitude];
+        CLLocation* toLocation = [[CLLocation alloc] initWithLatitude:self.yourCity.latitude longitude:self.yourCity.longtitude];
+        CGFloat distanceFromUserToCity = ([toLocation distanceFromLocation:fromLocation] / 1000)*1.3; // unit: km
+        if (distanceFromUserToCity >= MAX_DISTANCE_TO_CINEMA)
+        {
             ret = NO;
         }
-
+    }else{
+        ret = NO;
+    }
+    
     return ret;
     
 }

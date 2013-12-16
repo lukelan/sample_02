@@ -2,7 +2,7 @@
 //  CinemaTableViewCell.m
 //  123Phim
 //
-//  Created by Tai Truong on 12/8/13.
+//  Created by Trongvm on 12/8/13.
 //  Copyright (c) 2013 Phuong. Nguyen Minh. All rights reserved.
 //
 
@@ -18,6 +18,9 @@
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.backgroundColor = [UIColor clearColor];
         self.contentView.backgroundColor = [UIColor whiteColor];
+        
+//        [self.contentView.layer setBorderColor:[UIColor grayColor].CGColor];
+//        [self.contentView.layer setBorderWidth:0.35f];
         
         // arrow
         UIImageView *arrowImage = [[UIImageView alloc] initWithFrame:CGRectMake(297, 16, 12, 18 )];
