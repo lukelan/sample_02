@@ -197,6 +197,7 @@ static MainViewController* _sharedMyMainView = nil;
 
 -(void)viewDidAppear:(BOOL)animated
 {
+    NSLog(@"------------------ FINISH");
     [super viewDidAppear:animated];
 //    check to request rating app
     AppDelegate *app = (AppDelegate *)[[UIApplication sharedApplication] delegate];

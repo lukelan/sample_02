@@ -501,11 +501,8 @@ double lastSentLog = 0;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    #ifdef DEBUG
-        [Crittercism enableWithAppID:@"529c35b78b2e33351a000008"]; //Dev
-    #else
-        [Crittercism enableWithAppID:@"52a67e17558d6a242700000b"]; // Pro
-    #endif
+    NSLog(@"------------------ START APP");
+    
     [[APIManager sharedAPIManager] setWasSendLogin:NO];
     
     if(IS_NEED_OVERRIDE_DATABASE)
@@ -513,6 +510,7 @@ double lastSentLog = 0;
         [self replaceDatabase];
     }
     [self setupReskit123Phim];
+
     // init cache and clear mem
     [[SDWebImageManager sharedManagerWithCachePath:CACHE_IMAGE_PATH] setCacheKeyFilter:^NSString *(NSURL *url) {
         if ([url isKindOfClass:[NSURL class]])
@@ -522,15 +520,6 @@ double lastSentLog = 0;
         return (NSString *)url;
     }];
     
-    #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-    
-    //Tranking Conversion only support ios 6.0 or later
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 6.0)
-    {
-        [GoogleConversionPing pingWithConversionId:@"983463027" label:@"FaebCO3VswUQ8-j51AM" value:@"5000" isRepeatable:NO idfaOnly:YES];
-    }
-    
-    #pragma GCC diagnostic warning "-Wdeprecated-declarations"
     
 //    LOG_123PHIM(@"didFinishLaunchingWithOptions");
 #if IS_DEBUG_LOG_MEM
@@ -604,15 +593,15 @@ double lastSentLog = 0;
     MainViewController *mainViewController = [MainViewController sharedMainViewController];
     UINavigationController *navMain = [[UINavigationController alloc]initWithRootViewController:mainViewController];
     [self setBackGroundImage:strBG forNavigationBar:navMain.navigationBar];
-    
+
     PromotionViewController *promotionViewController = [PromotionViewController sharedPromotionViewController];
     UINavigationController *navPromotion = [[UINavigationController alloc]initWithRootViewController:promotionViewController];
     [self setBackGroundImage:strBG forNavigationBar:navPromotion.navigationBar];
-    
+
     AccountViewController *accountView=[[AccountViewController alloc] init];
     navUser=[[UINavigationController alloc]initWithRootViewController:accountView];
     [self setBackGroundImage:strBG forNavigationBar:navUser.navigationBar];
-    
+
     NSArray *arrTab=[[NSArray alloc]initWithObjects:navCinema,navMain,navPromotion,navUser, nil];
     self.tabBarController.viewControllers=arrTab;
     [self.tabBarController.view setFrame:CGRectZero];
@@ -622,6 +611,7 @@ double lastSentLog = 0;
     [self.tabBarController.tabBar setSelectionIndicatorImage:[UIImage imageNamed:@"footer-bar-active.png"]];
     [self.tabBarController.tabBar setBackgroundImage:[UIImage imageNamed:@"footer-bar.png"]];
     self.tabBarController.selectedIndex=1;
+    
     [self updateAppWithNewState: APP_STATE_INIT];
     
     [self.window makeKeyAndVisible];
@@ -635,6 +625,24 @@ double lastSentLog = 0;
         dicLocalNotification = localNotif.userInfo;
        // LOG_123PHIM(@"----gia tri object = %@---", dicLocalNotification);
     }
+    [self pushTabBarViewController];
+    
+#ifdef DEBUG
+    [Crittercism enableWithAppID:@"529c35b78b2e33351a000008"]; //Dev
+#else
+    [Crittercism enableWithAppID:@"52a67e17558d6a242700000b"]; // Pro
+#endif
+    
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+    
+    //Tranking Conversion only support ios 6.0 or later
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 6.0)
+    {
+        [GoogleConversionPing pingWithConversionId:@"983463027" label:@"FaebCO3VswUQ8-j51AM" value:@"5000" isRepeatable:NO idfaOnly:YES];
+    }
+    
+#pragma GCC diagnostic warning "-Wdeprecated-declarations"
+    
     return YES;
 }
 
@@ -1263,7 +1271,9 @@ double lastSentLog = 0;
 - (void)requestFilmList
 {
     startTime = [NSDate date];
-    [[APIManager sharedAPIManager] getBannerListWithResponseTo:[MainViewController sharedMainViewController]];
+    // duplicate loading data with MainViewController
+    // So no need to load list banner here because it is loaded in MainViewController - checkLoadDataIfNeed method when this view appeare
+//    [[APIManager sharedAPIManager] getBannerListWithResponseTo:[MainViewController sharedMainViewController]];
     //get transaction con pending truoc do
     [self getTransationDetail];
 }
@@ -1295,7 +1305,6 @@ double lastSentLog = 0;
         {
             [loadingViewController setLoadingStateString:@"Đang tải danh sách phim..."];
             [self requestFilmList];
-            [self performSelector:@selector(pushTabBarViewController) withObject:nil afterDelay:1.5];
         }
             break;
         default:

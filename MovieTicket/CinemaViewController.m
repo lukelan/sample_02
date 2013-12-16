@@ -184,8 +184,11 @@ static bool distanceGetFromCurrentPos = NO;
         _displayLocation = [[Position alloc] init];
         
         [self loadDataForView];
-        Location* city = [APIManager loadLocationObject];
-        [[APIManager sharedAPIManager] getListAllCinemaByLocation:city.location_id context:self];
+        
+        // duplicate loading code with AppDelegate (cause of low performance)
+        // no need to load list cinema here because we load it AppDelegate when app launch and check to reload in viewWillAppear method
+//        Location* city = [APIManager loadLocationObject];
+//        [[APIManager sharedAPIManager] getListAllCinemaByLocation:city.location_id context:self];
         
         // TrongV - 08/12/2013 - Show Tab bar as default
         self.tabBarDisplayType = TAB_BAR_DISPLAY_SHOW;

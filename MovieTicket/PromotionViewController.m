@@ -74,7 +74,8 @@ static PromotionViewController* _sharedMyPromotionView = nil;
         self.tabBarDisplayType = TAB_BAR_DISPLAY_SHOW;
         
         self.trackedViewName = viewName;
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkLoadDataIfNeed) name:UIApplicationDidBecomeActiveNotification object:nil];
+        // we check to load new data in viewdisappear, so no need to load when app comes active
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkLoadDataIfNeed) name:UIApplicationDidBecomeActiveNotification object:nil];
     }
     return self;
 }

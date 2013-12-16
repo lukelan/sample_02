@@ -299,7 +299,7 @@ static NSMutableDictionary *RKRegisteredResponseMapperOperationDataSourceClasses
     // Parse the response
     NSError *error;
     id parsedBody = [self parseResponseData:&error];
-    NSLog(@"----ParseBody = %@", parsedBody);
+//    NSLog(@"----ParseBody = %@", parsedBody);
     if (self.isCancelled) return [self willFinish];
     if (! parsedBody) {
         RKLogError(@"Failed to parse response data: %@", [error localizedDescription]);
