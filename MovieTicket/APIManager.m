@@ -109,7 +109,7 @@ static APIManager* _sharedMySingleton = nil;
     if (temp) {
         request = [self RK_SetupConfigPostRequestWithURL:pathURL temp:temp keyPost:keyPost];
     }
-    
+    [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
     RKObjectRequestOperation *objectRequestOperation = [[RKObjectManager sharedManager] managedObjectRequestOperationWithRequest:request managedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         [[RKObjectManager sharedManager] removeResponseDescriptor:responseDescriptor];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
@@ -231,6 +231,7 @@ static APIManager* _sharedMySingleton = nil;
     if (!request) {
         return;
     }
+    [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
     RKObjectRequestOperation *objectRequestOperation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[objectDescriptor]];
     [objectRequestOperation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         //            RKLogInfo(@"Array Load content  = %@", mappingResult.dictionary);

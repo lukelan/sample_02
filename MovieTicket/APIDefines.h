@@ -20,7 +20,7 @@
 #define ROOT_SERVER ([NSString stringWithFormat:@"%@%@",BASE_URL_SERVER,MSERVICE_API])
 #define IS_TEST 0//Khi build len app store nho xoa key nay
 #define MSERVICE_API @"mservice12?"
-#ifndef DEBUG
+#ifdef DEBUG
     #define BASE_URL_SERVER @"http://mapp-dev.123phim.vn/"
     #define MAPP_KEY @"MAPP_1@3Phim1@3"
     #define ROOT_FBSERVICE @"http://mapp-dev.123phim.vn/fbservice/"

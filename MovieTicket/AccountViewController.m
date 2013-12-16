@@ -40,12 +40,6 @@
 #define CELL_CLEAR_DATA 9
 #define CELL_BUTTON 10
 
-#define ACCEPT_LIKE_FANPAGE 0
-#if (!ACCEPT_LIKE_FANPAGE)
-#undef CELL_FANPAGE
-#define CELL_FANPAGE (-100)
-#endif
-
 @interface AccountViewController ()<RKManagerDelegate>
 
 @end
@@ -150,15 +144,10 @@ static bool isEvent = NO;
 //        [self downloadFriend];
 //    }
     if ([self.appdelegate isUserLoggedIn])
-        {
-            [self downloadFriend];
-        }
+    {
+        [self downloadFriend];
+    }
     self.trackedViewName = viewName;
-    
-//    NSString* previewView = ((AppDelegate*)[[UIApplication sharedApplication] delegate]).currentView;
-//    NSString* currentView = viewName;
-//    [[APIManager sharedAPIManager] sendLogToSever123PhimRequestURL:currentView comeFrom:previewView withActionID:LOG_ACTION_ID_VIEW currentFilmID:[NSNumber numberWithInt:NO_FILM_ID] currentCinemaID:[NSNumber numberWithInt:NO_CINEMA_ID] returnCodeValue:0 context:self];
-
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -259,9 +248,12 @@ static bool isEvent = NO;
             return 2;
 
         case CELL_FANPAGE:
-            if (ACCEPT_LIKE_FANPAGE && [self.appdelegate isUserLoggedIn]) {
+#ifdef LOGIN_FB_BY_WEB
+            if ([self.appdelegate isUserLoggedIn])
+            {
                 return 1;
             }
+#endif
             break;
             
         case CELL_FRIEND: //friend
@@ -409,6 +401,7 @@ static bool isEvent = NO;
             break;
     }
     [self reloadCellInFanPageSectionWithCell:cell];
+    [cell setClipsToBounds:YES];
     return cell;
 }
 
@@ -855,9 +848,13 @@ static bool isEvent = NO;
             
         case CELL_FANPAGE:
         {
-//            FBFanPageViewController *vcFanPage = [[FBFanPageViewController alloc] init];
-//            [self.navigationController pushViewController:vcFanPage animated:YES];
-//            [vcFanPage release];
+#ifdef LOGIN_FB_BY_WEB
+            if ([self.appdelegate isUserLoggedIn])
+            {
+                NSURL *urlApp = [NSURL URLWithString:@"fb://profile/123phim"];
+                [[UIApplication sharedApplication] openURL:urlApp];
+            }
+#endif
         }
             break;
         case CELL_FRIEND:
@@ -968,6 +965,15 @@ static bool isEvent = NO;
                 height = 88;
             }
             break;
+        case CELL_FANPAGE:
+//            if ([self.appdelegate isUserLoggedIn])
+//            {
+                height = 44;
+//            }
+//        #ifndef LOGIN_FB_BY_WEB
+//            height = 0;
+//        #endif
+            break;
     }
     return height;
 }
@@ -976,12 +982,16 @@ static bool isEvent = NO;
 {
     if (section == CELL_FANPAGE)
     {
-//        if ([self.appdelegate isUserLoggedIn]) {
-//            CGFloat height = [@"ABC" sizeWithFont:[UIFont getFontNormalSize13]].height;
-//            return (2*height + MARGIN_EDGE_TABLE_GROUP/2);
-//        } else {
+#ifdef LOGIN_FB_BY_WEB
+        if ([self.appdelegate isUserLoggedIn]) {
+            CGFloat height = [@"ABC" sizeWithFont:[UIFont getFontNormalSize13]].height;
+            return (2*height + MARGIN_EDGE_TABLE_GROUP/2);
+        } else {
             return 1.0;
-//        }
+        }
+#else
+        return 1.0f;
+#endif
     }
     if (section == CELL_FRIEND)
     {
@@ -1004,7 +1014,14 @@ static bool isEvent = NO;
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     if (section == CELL_FANPAGE) {
+#ifdef LOGIN_FB_BY_WEB
+        if (![self.appdelegate isUserLoggedIn])
+        {
+            return 1.0;
+        }
+#else
         return 1.0f;
+#endif
     }
     if (section == CELL_FRIEND)
     {
@@ -1041,28 +1058,28 @@ static bool isEvent = NO;
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-//    if (section == CELL_FANPAGE && [self.appdelegate isUserLoggedIn]) {
-//        //Layout title tip
-//        CGFloat xStar = MARGIN_EDGE_TABLE_GROUP;
-//        CGFloat yStar = 0;
-//        UIView* ret = [[UIView alloc] init];
-//        UILabel *lblTipLikeFanpage = [[UILabel alloc] init];
-//        [lblTipLikeFanpage setFont:[UIFont getFontNormalSize13]];
-//        [lblTipLikeFanpage setBackgroundColor:[UIColor clearColor]];
-//        [lblTipLikeFanpage setTextColor:[UIColor grayColor]];
-//        [lblTipLikeFanpage setLineBreakMode:UILineBreakModeWordWrap];
-//        lblTipLikeFanpage.numberOfLines = 0;
-//        lblTipLikeFanpage.text = TIP_LIKE_FANPAGE;
-//        
-//        CGSize sizeTextTitle = [lblTipLikeFanpage.text sizeWithFont:lblTipLikeFanpage.font];
-//        CGFloat widthText = self.view.frame.size.width - 2*MARGIN_EDGE_TABLE_GROUP;
-//        [lblTipLikeFanpage setFrame:CGRectMake(xStar, yStar, widthText, 2*sizeTextTitle.height)];
-//        
-//        [ret addSubview:lblTipLikeFanpage];
-//        [lblTipLikeFanpage release];
-//        return [ret autorelease];
-//    }
-    
+#ifdef LOGIN_FB_BY_WEB
+    if (section == CELL_FANPAGE && [self.appdelegate isUserLoggedIn]) {
+        //Layout title tip
+        CGFloat xStar = MARGIN_EDGE_TABLE_GROUP;
+        CGFloat yStar = 0;
+        UIView* ret = [[UIView alloc] init];
+        UILabel *lblTipLikeFanpage = [[UILabel alloc] init];
+        [lblTipLikeFanpage setFont:[UIFont getFontNormalSize13]];
+        [lblTipLikeFanpage setBackgroundColor:[UIColor clearColor]];
+        [lblTipLikeFanpage setTextColor:[UIColor grayColor]];
+        [lblTipLikeFanpage setLineBreakMode:UILineBreakModeWordWrap];
+        lblTipLikeFanpage.numberOfLines = 0;
+        lblTipLikeFanpage.text = TIP_LIKE_FANPAGE;
+        
+        CGSize sizeTextTitle = [lblTipLikeFanpage.text sizeWithFont:lblTipLikeFanpage.font];
+        CGFloat widthText = self.view.frame.size.width - 2*MARGIN_EDGE_TABLE_GROUP;
+        [lblTipLikeFanpage setFrame:CGRectMake(xStar, yStar, widthText, 2*sizeTextTitle.height)];
+        
+        [ret addSubview:lblTipLikeFanpage];
+        return ret;
+    }
+#endif
     return nil;
 }
 

@@ -5,7 +5,6 @@
 //  Created by phuonnm on 3/6/13.
 //  Copyright (c) 2013 Phuong. Nguyen Minh. All rights reserved.
 //
-
 #import "FacebookHandler.h"
 #import "AppDelegate.h"
 
@@ -112,10 +111,12 @@ static FacebookHandler* _sharedMyFacebookHandler = nil;
     [center postNotificationName:NOTIFICATION_NAME_FACEBOOK_ACCOUNT_INFO_BEGIN_LOGIN object:nil];
     FBSessionLoginBehavior behavior = switchUser ?
         FBSessionLoginBehaviorForcingWebView : FBSessionLoginBehaviorWithFallbackToWebView;
-//    behavior = FBSessionLoginBehaviorUseSystemAccountIfPresent;
-//    behavior = FBSessionLoginBehaviorWithNoFallbackToWebView;
-//    behavior = FBSessionLoginBehaviorForcingWebView;
-
+#ifdef LOGIN_FB_BY_WEB
+    behavior = FBSessionLoginBehaviorUseSystemAccountIfPresent;
+    behavior = FBSessionLoginBehaviorWithNoFallbackToWebView;
+    behavior = FBSessionLoginBehaviorForcingWebView;
+#endif
+    
     [FBSession.activeSession openWithBehavior:behavior
                             completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
         if (error)

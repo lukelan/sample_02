@@ -16,14 +16,25 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-        self.backgroundColor = [UIColor clearColor];
-        self.contentView.backgroundColor = [UIColor whiteColor];
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+            self.backgroundColor = [UIColor clearColor];
+            self.contentView.backgroundColor = [UIColor whiteColor];
+        } else {
+            self.backgroundColor = [UIColor whiteColor];
+            self.contentView.backgroundColor = [UIColor clearColor];
+        }
+        
         
 //        [self.contentView.layer setBorderColor:[UIColor grayColor].CGColor];
 //        [self.contentView.layer setBorderWidth:0.35f];
         
         // arrow
-        UIImageView *arrowImage = [[UIImageView alloc] initWithFrame:CGRectMake(297, 16, 12, 18 )];
+        UIImageView *arrowImage;
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+            arrowImage = [[UIImageView alloc] initWithFrame:CGRectMake(297, 16, 12, 18 )];
+        } else {
+            arrowImage = [[UIImageView alloc] initWithFrame:CGRectMake(286, 16, 12, 18 )];
+        }
         [arrowImage setImage:[UIImage imageNamed:@"arrow_right"]];
         [self.contentView addSubview:arrowImage];
         

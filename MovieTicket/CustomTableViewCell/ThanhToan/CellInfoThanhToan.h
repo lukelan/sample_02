@@ -15,4 +15,5 @@
 }
 -(void)layoutInfoCell:(BuyingInfo *)buyInfo;
 -(void)layoutInfoCell:(NSString *)strGhe sessionTime:(NSString *)session_time totalMoney:(int) totalMoney;
+-(BOOL)isIOS7;
 @end

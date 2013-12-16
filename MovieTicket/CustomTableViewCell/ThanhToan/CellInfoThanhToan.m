@@ -148,11 +148,18 @@
     //Add to content view
     [scrollView addSubview:lblGhe];
     scrollView.contentSize = CGSizeMake(lblGhe.frame.size.width + 10, 0);
-    [self.contentView addSubview:lblTitleGhe];
-    [self.contentView addSubview:scrollView];
-    [self.contentView addSubview:lblTitleSession];
-    [self.contentView addSubview:lblSession];
-    [self.contentView addSubview:lblTitleMoney];
-    [self.contentView addSubview:lblMoney];
+    UIView *viewLayout = [[UIView alloc]initWithFrame:self.contentView.frame];
+    viewLayout.backgroundColor = [UIColor clearColor];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
+    {
+        viewLayout.frame = CGRectMake(viewLayout.frame.origin.x + MARGIN_EDGE_TABLE_GROUP, viewLayout.frame.origin.y, viewLayout.frame.size.width, viewLayout.frame.size.height);
+    }
+    [viewLayout addSubview:lblTitleGhe];
+    [viewLayout addSubview:scrollView];
+    [viewLayout addSubview:lblTitleSession];
+    [viewLayout addSubview:lblSession];
+    [viewLayout addSubview:lblTitleMoney];
+    [viewLayout addSubview:lblMoney];
+    [self.contentView addSubview:viewLayout];
 }
 @end

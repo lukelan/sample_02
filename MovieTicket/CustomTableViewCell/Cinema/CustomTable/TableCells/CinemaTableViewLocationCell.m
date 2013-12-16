@@ -33,7 +33,11 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // image
-        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 1, 49, 48)];
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+            _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 1, 49, 48)];
+        } else {
+            _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, -2, 45.0f + kCinemaTableViewPlaceCell_PaddingBottom, 45.0f + kCinemaTableViewPlaceCell_PaddingBottom)];
+        }
         [_imageView setImage:[UIImage imageNamed:@"location.png"]];
         [self.contentView addSubview:_imageView];
         // title
@@ -57,7 +61,11 @@
 
 +(CGFloat)tableView:(UITableView *)tableView rowHeightForObject:(id)object
 {
-    return 50.0f + kCinemaTableViewPlaceCell_PaddingBottom;
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+        return 50.0f + kCinemaTableViewPlaceCell_PaddingBottom;
+    } else {
+        return 45.0f + kCinemaTableViewPlaceCell_PaddingBottom;
+    }
 }
 
 -(void)setObject:(id)object
